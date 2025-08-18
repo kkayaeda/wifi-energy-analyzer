@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wi-Fi Device List</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body class="bg-light">
+
+  <div class="container py-4">
+    <h1 class="mb-4 text-center">Wi-Fi Device List</h1>
+    <p class="text-center" id="deviceCount">Devices connected: {{ device_count }}</p>
+    <p class="text-center text-muted" id="lastUpdated">Last updated: {{ last_updated or "-" }}</p>
+
+    <!-- Butonlar -->
+    <div class="mb-3 d-flex gap-2">
+      <button class="btn btn-primary" id="scanBtn">Scan Devices</button>
+      &nbsp;
+      <button class="btn btn-secondary" id="refreshBtn">Refresh</button>
+    </div>
+
+    <!-- Tablo -->
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover rounded-3 overflow-hidden">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">IP</th>
+            <th scope="col">MAC</th>
+            <th scope="col">Name</th>
+            <th scope="col">Vendor</th>
+            <th scope="col">Connection Time</th>
+            <th scope="col">Energy</th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+          <tr><td colspan="7" class="text-center text-muted">No data yet</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Status -->
+    <div class="mt-2">
+      <span class="badge badge-secondary" id="status">Ready</span>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    const API_BASE = 'http://127.0.0.1:5000';
+    const tbody = document.getElementById('tbody');
+    const statusEl = document.getElementById('status');
+    const scanBtn = document.getElementById('scanBtn');
+    const refreshBtn = document.getElementById('refreshBtn');
+    const deviceCountEl = document.getElementById('deviceCount');
+    const lastUpdatedEl = document.getElementById('lastUpdated');
+
+    function setStatus(text){ statusEl.textContent = text; }
+
+    function renderRows(list){
+      tbody.innerHTML = '';
+      if(!list || list.length === 0){
+        tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted">No devices found</td></tr>';
+        deviceCountEl.textContent = "Devices connected: 0";
+        lastUpdatedEl.textContent = "Last updated: -";
+        return;
+      }
+
+      list.forEach((d, i) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${i+1}</td>
+          <td>${d.ip || '-'}</td>
+          <td>${d.mac || '-'}</td>
+          <td>${d.hostname || '-'}</td>
+          <td>${d.vendor || '-'}</td>
+          <td>${d.connectiontime || '-'}</td>
+          <td>${d.energy || '-'}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      deviceCountEl.textContent = `Devices connected: ${list.length}`;
+      lastUpdatedEl.textContent = `Last updated: ${list[0]?.last_updated || "-"}`;
+    }
+
+    async function fetchDevices(){
+      setStatus('Loading...');
+      try {
+        const res = await fetch(`${API_BASE}/devices`);
+        const data = await res.json();
+        renderRows(data.devices || data.devices);
+        setStatus('Updated');
+      } catch (err) {
+        setStatus('Connection Error');
+      }
+    }
+
+    async function startScan(){
+      setStatus('Scanning...');
+      scanBtn.disabled = true;
+      try {
+        await fetch(`${API_BASE}/scan`, { method: 'POST' });
+        await fetchDevices();
+      } catch (err) {
+        setStatus('Scanning failed to start');
+      } finally {
+        scanBtn.disabled = false;
+      }
+    }
+
+    scanBtn.addEventListener('click', startScan);
+    refreshBtn.addEventListener('click', fetchDevices);
+    setInterval(fetchDevices, 10000);
+    setInterval(startScan, 30000);
+  </script>
+</body>
+</html>
