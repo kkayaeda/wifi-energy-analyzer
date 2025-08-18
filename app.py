@@ -126,6 +126,10 @@ def start_scan():
 
 @app.route("/")
 def index():
+    global last_updated
+    # 🔹 İlk açılışta otomatik tarama yap
+    if last_updated is None:
+        scan_devices()
     return render_template("index.html",
                            device_count=len(devices_cache),
                            last_updated=last_updated)

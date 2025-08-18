@@ -22,7 +22,7 @@
       <button class="btn btn-secondary" id="refreshBtn">Refresh</button>
     </div>
 
-    <!-- Tablo -->
+    <!-- Devices Table -->
     <div class="table-responsive">
       <table class="table table-bordered table-hover rounded-3 overflow-hidden">
         <thead class="table-dark">
@@ -33,11 +33,29 @@
             <th scope="col">Name</th>
             <th scope="col">Vendor</th>
             <th scope="col">Connection Time</th>
-            <th scope="col">Energy</th>
+            <th scope="col">Energy (kWh)</th>
           </tr>
         </thead>
-        <tbody id="tbody">
+        <tbody id="deviceBody">
           <tr><td colspan="7" class="text-center text-muted">No data yet</td></tr>
+        </tbody>
+      </table>
+
+      <!-- Summary Table -->
+      <table class="table table-bordered table-hover rounded-3 overflow-hidden">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">Total Energy (kWh)</th>
+            <th scope="col">Cost (₺)</th>
+            <th scope="col">Carbon Emission (kg CO₂)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td id="totalEnergy">-</td>
+            <td id="totalCost">-</td>
+            <td id="totalCarbon">-</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -53,21 +71,51 @@
 
   <script>
     const API_BASE = 'http://127.0.0.1:5000';
-    const tbody = document.getElementById('tbody');
+    const deviceBody = document.getElementById('deviceBody');
     const statusEl = document.getElementById('status');
     const scanBtn = document.getElementById('scanBtn');
     const refreshBtn = document.getElementById('refreshBtn');
     const deviceCountEl = document.getElementById('deviceCount');
     const lastUpdatedEl = document.getElementById('lastUpdated');
 
+    // summary ids
+    const totalEnergyEl = document.getElementById('totalEnergy');
+    const totalCostEl = document.getElementById('totalCost');
+    const totalCarbonEl = document.getElementById('totalCarbon');
+
+    // Varsayımlar
+    const COST_PER_KWH = 2.6;   // ₺/kWh (örnek)
+    const CO2_PER_KWH = 0.475;    // kg CO₂/kWh (örnek)
+
     function setStatus(text){ statusEl.textContent = text; }
 
-    function renderRows(list){
-      tbody.innerHTML = '';
+    function updateSummary(list){
+      let totalEnergy = 0;
+      list.forEach(d => {
+        const val = parseFloat(d.energy);
+        if(!isNaN(val)) totalEnergy += val;
+      });
+
+      if(totalEnergy > 0){
+        const totalCost = totalEnergy * COST_PER_KWH;
+        const totalCarbon = totalEnergy * CO2_PER_KWH;
+        totalEnergyEl.textContent = totalEnergy.toFixed(2);
+        totalCostEl.textContent = totalCost.toFixed(2);
+        totalCarbonEl.textContent = totalCarbon.toFixed(2);
+      } else {
+        totalEnergyEl.textContent = "-";
+        totalCostEl.textContent = "-";
+        totalCarbonEl.textContent = "-";
+      }
+    }
+
+    function renderRows(list, last_updated){
+      deviceBody.innerHTML = '';
       if(!list || list.length === 0){
-        tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted">No devices found</td></tr>';
+        deviceBody.innerHTML = '<tr><td colspan="7" class="text-center text-muted">No devices found</td></tr>';
         deviceCountEl.textContent = "Devices connected: 0";
         lastUpdatedEl.textContent = "Last updated: -";
+        updateSummary([]);
         return;
       }
 
@@ -82,11 +130,12 @@
           <td>${d.connectiontime || '-'}</td>
           <td>${d.energy || '-'}</td>
         `;
-        tbody.appendChild(tr);
+        deviceBody.appendChild(tr);
       });
 
       deviceCountEl.textContent = `Devices connected: ${list.length}`;
-      lastUpdatedEl.textContent = `Last updated: ${list[0]?.last_updated || "-"}`;
+      lastUpdatedEl.textContent = `Last updated: ${last_updated || "-"}`;
+      updateSummary(list);
     }
 
     async function fetchDevices(){
@@ -94,7 +143,7 @@
       try {
         const res = await fetch(`${API_BASE}/devices`);
         const data = await res.json();
-        renderRows(data.devices || data.devices);
+        renderRows(data.devices, data.last_updated);
         setStatus('Updated');
       } catch (err) {
         setStatus('Connection Error');
