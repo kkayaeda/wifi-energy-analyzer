@@ -9,6 +9,32 @@
   <link href="css/bootstrap.min.css" rel="stylesheet" />
 
   <style>
+    /* Navbar Styling */
+    .navbar-brand {
+      color: #145A32 !important;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+    .navbar .nav-link {
+      color: #212529 !important;
+      transition: color 0.3s ease;
+    }
+    .navbar .nav-link:hover {
+      color: #000 !important;
+    }
+    body.dark-mode .navbar {
+      background-color: #1f1f1f !important;
+    }
+    body.dark-mode .navbar-brand {
+      color: #4CAF50 !important;
+    }
+    body.dark-mode .nav-link {
+      color: #f1f1f1 !important;
+    }
+    body.dark-mode .nav-link:hover {
+      color: #ccc !important;
+    }
+
     body {
       background-color: #f8f9fa;
       color: #212529;
@@ -17,34 +43,6 @@
     body.dark-mode {
       background-color: #1f1f1f;
       color: #f1f1f1;
-    }
-    body.dark-mode .table-rounded {
-      border-color: #555;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-    }
-    body.dark-mode .table-rounded tbody tr {
-      background-color: #2a2a2a;
-      color: #f1f1f1;
-    }
-    body.dark-mode .table-rounded tbody tr:hover {
-      background-color: #3a3a3a;
-    }
-    body.dark-mode .table-rounded th, 
-    body.dark-mode .table-rounded td {
-      border-color: #666;
-    }
-    body.dark-mode .table-rounded thead {
-      background-color: #145A32;
-    }
-
-    /* Status Styling */
-    #status {
-      transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
-    }
-    body.dark-mode #status {
-      background-color: #1f1f1f;
-      color: #f1f1f1;
-      border: none;
     }
 
     /* Toggle styling */
@@ -59,6 +57,12 @@
       height: 16px;
       vertical-align: middle;
       transition: all 0.3s ease;
+    }
+
+    /* Paragraf alanı */
+    p {
+      font-size: 1rem;
+      line-height: 1.6;
     }
   </style>
 </head>
@@ -91,7 +95,7 @@
 
     <!-- Paragraf Alanı -->
     <p>
-      <!-- Buraya istediğin açıklamayı yazabilirsin. -->
+      About paragrafı
     </p>
 
     <!-- Dark Mode Switch -->
@@ -124,15 +128,24 @@
       if (localStorage.getItem("darkMode") === "enabled") {
         body.classList.add("dark-mode");
         toggleSwitch.checked = true;
+        toggleIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-toggle-on toggle-icon" viewBox="0 0 16 16">
+          <path d="M5 3a5 5 0 0 0 0 10h6a5 5 0 0 0 0-10zm6 9a4 4 0 1 1 0-8 4 4 0 0 1 0 8"></path>
+        </svg>`;
       }
 
       toggleSwitch.addEventListener("change", function () {
         if (toggleSwitch.checked) {
           body.classList.add("dark-mode");
           localStorage.setItem("darkMode", "enabled");
+          toggleIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-toggle-on toggle-icon" viewBox="0 0 16 16">
+            <path d="M5 3a5 5 0 0 0 0 10h6a5 5 0 0 0 0-10zm6 9a4 4 0 1 1 0-8 4 4 0 0 1 0 8"></path>
+          </svg>`;
         } else {
           body.classList.remove("dark-mode");
           localStorage.setItem("darkMode", "disabled");
+          toggleIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-toggle-off toggle-icon" viewBox="0 0 16 16">
+            <path d="M11 4a4 4 0 0 1 0 8H8a5 5 0 0 0 2-4 5 5 0 0 0-2-4zm-6 8a4 4 0 1 1 0-8 4 4 0 0 1 0 8M0 8a5 5 0 0 0 5 5h6a5 5 0 0 0 0-10H5a5 5 0 0 0-5 5"></path>
+          </svg>`;
         }
       });
     });

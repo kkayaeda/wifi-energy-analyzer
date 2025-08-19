@@ -8,35 +8,34 @@
   <!-- Bootstrap CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet" />
 
-
-
-  <!-- Image and text -->
-<nav class="navbar bg-body-tertiary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="index.html">
-      <img
-        src="wifi-energy-analyzer-logo.png"
-        class="me-2"
-        height="60"
-        alt="Energy Logo"
-        loading="lazy"
-      />
-      <small>Wi-Fi Energy Analyzer</small>
-    </a>
-    <ul class="navbar-nav d-flex flex-row">
-      <li class="nav-item me-3">
-        <a class="nav-link" href="about.html">About</a>
-      </li>
-    </ul>
-  </div>
-</nav>
-  </div>
-</nav>
-
-
-
   <!-- Custom Table & Dark Mode Style -->
   <style>
+    /* Navbar Styling */
+    .navbar-brand {
+      color: #145A32 !important;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+    .navbar .nav-link {
+      color: #212529 !important;
+      transition: color 0.3s ease;
+    }
+    .navbar .nav-link:hover {
+      color: #000 !important;
+    }
+    body.dark-mode .navbar {
+      background-color: #1f1f1f !important;
+    }
+    body.dark-mode .navbar-brand {
+      color: #4CAF50 !important;
+    }
+    body.dark-mode .nav-link {
+      color: #f1f1f1 !important;
+    }
+    body.dark-mode .nav-link:hover {
+      color: #ccc !important;
+    }
+
     /* Table Styling */
     .table-rounded {
       border-radius: 15px;
@@ -63,17 +62,6 @@
       border-color: #ccc;
       transition: border-color 0.4s ease;
     }
-
-    /* Light/Dark Mode Styling */
-    body {
-      background-color: #f8f9fa;
-      color: #212529;
-      transition: background-color 0.4s ease, color 0.4s ease;
-    }
-    body.dark-mode {
-      background-color: #1f1f1f;
-      color: #f1f1f1;
-    }
     body.dark-mode .table-rounded {
       border-color: #555;
       box-shadow: 0 4px 12px rgba(0,0,0,0.5);
@@ -89,18 +77,27 @@
     body.dark-mode .table-rounded td {
       border-color: #666;
     }
-    body.dark-mode .table-rounded thead {
-      background-color: #145A32;
-    }
 
-    /* Status Styling */
-    #status {
-      transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
+    /* Body Background & Text */
+    body {
+      background-color: #f8f9fa;
+      color: #212529;
+      transition: background-color 0.4s ease, color 0.4s ease;
     }
-    body.dark-mode #status {
+    body.dark-mode {
       background-color: #1f1f1f;
       color: #f1f1f1;
-      border: none;
+    }
+
+    /* Status Badge */
+    #status {
+      border-radius: 20px;
+      padding: 0.4rem 0.8rem;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+    #status:hover {
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
 
     /* Toggle styling */
@@ -117,7 +114,7 @@
       transition: all 0.3s ease;
     }
 
-    /* Button improvements with smooth hover in dark mode */
+    /* Buttons dark mode */
     body.dark-mode .btn.btn-outline-danger {
       border-color: #e74c3c;
       color: #e74c3c;
@@ -128,20 +125,24 @@
       color: #fff;
       transition: all 0.3s ease;
     }
-
-    /* Badge smooth hover */
-    #status {
-      border-radius: 20px;
-      padding: 0.4rem 0.8rem;
-      display: inline-block;
-      transition: all 0.3s ease;
-    }
-    #status:hover {
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
   </style>
 </head>
 <body>
+
+  <!-- Navbar -->
+  <nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">
+        <img src="wifi-energy-analyzer-logo.png" class="me-2" height="60" alt="Energy Logo" loading="lazy"/>
+        <small>Wi-Fi Energy Analyzer</small>
+      </a>
+      <ul class="navbar-nav d-flex flex-row">
+        <li class="nav-item me-3">
+          <a class="nav-link" href="about.html">About</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
 
   <div class="container py-4">
     <h1 class="mb-4 text-center" style="font-weight:bold">Wi-Fi Energy Analyzer</h1>
@@ -164,13 +165,9 @@
     <!-- Buttons -->
     <div class="mb-3 d-flex justify-content-between align-items-center">
       <div>
-        <button type="button" class="btn btn-success" id="scanBtn">
-          Scan Devices
-        </button>
+        <button type="button" class="btn btn-success" id="scanBtn">Scan Devices</button>
         &nbsp;
-        <button type="button" class="btn btn-outline-danger" id="refreshBtn">
-          Refresh
-        </button>
+        <button type="button" class="btn btn-outline-danger" id="refreshBtn">Refresh</button>
       </div>
       <span class="text-muted" id="lastUpdated">Last updated: {{ last_updated or "-" }}</span>
     </div>
