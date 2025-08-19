@@ -3,35 +3,38 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Wi-Fi Device List</title>
+  <title>Wi-Fi Energy Analyzer</title>
 
   <!-- Bootstrap CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet" />
+  <link href="css/table.css" rel="stylesheet" />
 </head>
 <body class="bg-light">
 
   <div class="container py-4">
-    <h1 class="mb-4 text-center">Wi-Fi Device List</h1>
-    <p class="text-center" id="deviceCount">Devices connected: {{ device_count }}</p>
-    <p class="text-center text-muted" id="lastUpdated">Last updated: {{ last_updated or "-" }}</p>
+    <h1 class="mb-4 text-center" style="font-weight:bold">Wi-Fi Energy Analyzer</h1>
+    
 
     <!-- Butonlar -->
-    <div class="mb-3 d-flex gap-2">
-      <button class="btn btn-primary" id="scanBtn">Scan Devices</button>
-      &nbsp;
-      <button class="btn btn-secondary" id="refreshBtn">Refresh</button>
-    </div>
+<div class="mb-3 d-flex justify-content-between align-items-center">
+  <div>
+    <button class="btn btn-outline-success" id="scanBtn">Scan Devices</button>
+    &nbsp;
+    <button class="btn btn-outline-secondary" id="refreshBtn">Refresh</button>
+  </div>
+  <span class="text-muted" id="lastUpdated">Last updated: {{ last_updated or "-" }}</span>
+</div>
 
     <!-- Devices Table -->
     <div class="table-responsive">
-      <table class="table table-bordered table-hover rounded-3 overflow-hidden">
+      <table class="table table-bordered table-hover table-rounded">
         <thead class="table-dark">
           <tr>
             <th scope="col">#</th>
             <th scope="col">IP</th>
             <th scope="col">MAC</th>
-            <th scope="col">Name</th>
-            <th scope="col">Vendor</th>
+            <th scope="col">Device Name</th>
+            <th scope="col">Manufacturer</th>
             <th scope="col">Connection Time</th>
             <th scope="col">Energy (kWh)</th>
           </tr>
@@ -40,9 +43,10 @@
           <tr><td colspan="7" class="text-center text-muted">No data yet</td></tr>
         </tbody>
       </table>
+      <p class="text-right text-muted" id="deviceCount">Devices connected: {{ device_count }}</p>
 
       <!-- Summary Table -->
-      <table class="table table-bordered table-hover rounded-3 overflow-hidden">
+      <table class="table table-bordered table-hover table-rounded">
         <thead class="table-dark">
           <tr>
             <th scope="col">Total Energy (kWh)</th>
@@ -62,7 +66,7 @@
 
     <!-- Status -->
     <div class="mt-2">
-      <span class="badge badge-secondary" id="status">Ready</span>
+    <span class="badge badge-pill badge-light" id="status">Ready</span>
     </div>
   </div>
 

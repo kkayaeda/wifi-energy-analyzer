@@ -1,0 +1,62 @@
+.table-rounded {
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Başlık kısmını koyu yeşil, font beyaz */
+.table-rounded thead {
+    background-color: #2E7D32; /* koyu yeşil */
+    color: white;
+    font-weight: 600;
+}
+
+/* Gövde kısmı beyaz, font siyah */
+.table-rounded tbody {
+    background-color: white;
+    color: black;
+}
+
+/* Hover efekti: fare üstüne gelince yumuşak gri */
+.table-rounded tbody tr {
+    transition: background-color 0.25s ease;
+}
+.table-rounded tbody tr:hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+
+/* Tablo hücrelerinin kenarlık rengi açık */
+.table-rounded th, .table-rounded td {
+    border-color: #dee2e6;
+    vertical-align: middle;
+}
+
+/* Responsive tabloların içindeki başlıkları da yuvarlat */
+.table-responsive {
+    margin-bottom: 1.5rem;
+}
+
+/* Özet tablosu için biraz farklı stil */
+.summary-table {
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.summary-table thead {
+    background-color: #2E7D32;
+    color: white;
+    font-weight: 600;
+}
+
+.summary-table tbody td {
+    background-color: white;
+    color: black;
+    text-align: center;
+    font-weight: 500;
+}
+
+.summary-table tbody tr:hover {
+    background-color: #f0f0f0;
+}
