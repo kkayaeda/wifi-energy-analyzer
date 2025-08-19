@@ -8,6 +8,33 @@
   <!-- Bootstrap CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet" />
 
+
+
+  <!-- Image and text -->
+<nav class="navbar bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">
+      <img
+        src="wifi-energy-analyzer-logo.png"
+        class="me-2"
+        height="60"
+        alt="Energy Logo"
+        loading="lazy"
+      />
+      <small>Wi-Fi Energy Analyzer</small>
+    </a>
+    <ul class="navbar-nav d-flex flex-row">
+      <li class="nav-item me-3">
+        <a class="nav-link" href="about.html">About</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+  </div>
+</nav>
+
+
+
   <!-- Custom Table & Dark Mode Style -->
   <style>
     /* Table Styling */
@@ -30,6 +57,7 @@
     }
     .table-rounded tbody tr:hover {
       background-color: #f2f2f2;
+      transition: background-color 0.3s ease;
     }
     .table-rounded th, .table-rounded td {
       border-color: #ccc;
@@ -67,7 +95,7 @@
 
     /* Status Styling */
     #status {
-      transition: background-color 0.4s ease, color 0.4s ease, border 0.4s ease;
+      transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
     }
     body.dark-mode #status {
       background-color: #1f1f1f;
@@ -89,7 +117,7 @@
       transition: all 0.3s ease;
     }
 
-    /* Button improvements in dark mode */
+    /* Button improvements with smooth hover in dark mode */
     body.dark-mode .btn.btn-outline-danger {
       border-color: #e74c3c;
       color: #e74c3c;
@@ -98,6 +126,18 @@
     body.dark-mode .btn.btn-outline-danger:hover {
       background-color: #e74c3c;
       color: #fff;
+      transition: all 0.3s ease;
+    }
+
+    /* Badge smooth hover */
+    #status {
+      border-radius: 20px;
+      padding: 0.4rem 0.8rem;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+    #status:hover {
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
   </style>
 </head>
@@ -121,21 +161,14 @@
       </div>
     </div>
 
-    <!-- Butonlar -->
+    <!-- Buttons -->
     <div class="mb-3 d-flex justify-content-between align-items-center">
       <div>
         <button type="button" class="btn btn-success" id="scanBtn">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-break" viewBox="0 0 16 16">
-            <path d="M14 4.5V9h-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v7H2V2a2 2 0 0 1 2-2h5.5zM13 12h1v2a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-2h1v2a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1zM.5 10a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1z"></path>
-          </svg>
           Scan Devices
         </button>
         &nbsp;
         <button type="button" class="btn btn-outline-danger" id="refreshBtn">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
-            <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9"></path>
-            <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"></path>
-          </svg>
           Refresh
         </button>
       </div>
@@ -208,7 +241,7 @@
       }
     });
 
-    // Existing JS
+    // JS: Fetch and render
     const API_BASE = 'http://127.0.0.1:5000';
     const deviceBody = document.getElementById('deviceBody');
     const statusEl = document.getElementById('status');
