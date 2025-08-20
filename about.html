@@ -9,32 +9,6 @@
   <link href="css/bootstrap.min.css" rel="stylesheet" />
 
   <style>
-    /* Navbar Styling */
-    .navbar-brand {
-      color: #145A32 !important;
-      font-weight: bold;
-      transition: color 0.3s ease;
-    }
-    .navbar .nav-link {
-      color: #212529 !important;
-      transition: color 0.3s ease;
-    }
-    .navbar .nav-link:hover {
-      color: #000 !important;
-    }
-    body.dark-mode .navbar {
-      background-color: #1f1f1f !important;
-    }
-    body.dark-mode .navbar-brand {
-      color: #4CAF50 !important;
-    }
-    body.dark-mode .nav-link {
-      color: #f1f1f1 !important;
-    }
-    body.dark-mode .nav-link:hover {
-      color: #ccc !important;
-    }
-
     body {
       background-color: #f8f9fa;
       color: #212529;
@@ -45,74 +19,177 @@
       color: #f1f1f1;
     }
 
-    /* Toggle styling */
-    .form-check.form-switch {
+        /* Normal Navbar */
+    .navbar-brand {
+    color: #145A32 !important;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    }
+    .navbar {
+    background-color: #eeeeee !important;
+    }
+    .navbar .nav-link {
+    color: #212529 !important;
+    transition: color 0.3s ease;
+    }
+    .navbar .nav-link:hover {
+    color: #000 !important; /* Hover rengi */
+    }
+
+    /* Aktif sekme */
+    .navbar .nav-link.active {
+    color: #145A32 !important; /* Aktif link rengi */
+    font-weight: bold;
+    }
+
+    /* Dark mode */
+    body.dark-mode .navbar {
+    background-color: #2a2a2a !important;
+    }
+    body.dark-mode .navbar-brand {
+    color: #4CAF50 !important;
+    }
+    body.dark-mode .nav-link {
+    color: #f1f1f1 !important;
+    }
+    body.dark-mode .nav-link:hover {
+    color: #ccc !important;
+    }
+    body.dark-mode .nav-link.active {
+    color: #4CAF50 !important; /* Aktif link rengi */
+    }
+
+    /* Toggle Icon */
+    #darkModeToggle {
+      cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      cursor: pointer;
+      justify-content: flex-end;
     }
     .toggle-icon {
-      width: 16px;
-      height: 16px;
-      vertical-align: middle;
+      width: 32px;
+      height: 32px;
       transition: all 0.3s ease;
     }
 
-    /* Paragraf alanı */
-    p {
-      font-size: 1rem;
-      line-height: 1.6;
+    /* Page Content */
+    .container h1 {
+      font-weight: bold;
     }
   </style>
 </head>
 
 <body>
   <!-- Navbar -->
-  <nav class="navbar bg-body-tertiary">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="index.html">
+  <nav class="navbar sticky-top bg-body-tertiary shadow">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+      
+      <!-- Sol kısım: Logo + About -->
+      <div class="d-flex align-items-center">
         <img
-          src="wifi-energy-analyzer-logo.png"
-          class="me-2"
-          height="60"
-          alt="Energy Logo"
-          loading="lazy"
-        />
-        <small>Wi-Fi Energy Analyzer</small>
-      </a>
-      <ul class="navbar-nav d-flex flex-row">
-        <li class="nav-item me-3">
-          <a class="nav-link" href="about.html">About</a>
-        </li>
-      </ul>
+            src="wifi-energy-analyzer-logo.png"
+            class="me-2"
+            height="60"
+            alt="Energy Logo"
+            loading="lazy"
+          />
+        <a class="navbar-brand me-3" href="index.html">
+          <small>Wi-Fi Energy Analyzer</small>
+        </a>
+        <ul class="navbar-nav flex-row">
+          <li class="nav-item me-3">
+            <a class="nav-link active" href="about.html">About</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Sağ kısım: Dark Mode Toggle -->
+      <div id="darkModeToggle">
+        <span id="toggleIcon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+            class="bi bi-toggle-off toggle-icon" viewBox="0 0 16 16">
+            <path d="M11 4a4 4 0 0 1 0 8H8a5 5 0 0 0 2-4 5 5 0 0 0-2-4zm-6 8a4 4 0 1 1 0-8 4 4 0 0 1 0 8M0 8a5 5 0 0 0 5 5h6a5 5 0 0 0 0-10H5a5 5 0 0 0-5 5"></path>
+          </svg>
+        </span>
+      </div>
     </div>
   </nav>
 
-  <!-- Page Content -->
-  <div class="container py-4">
-    <h1 class="mb-4 text-left" style="font-weight:bold">About</h1>
+<!-- Page Content -->
+<div class="container py-4">
+  <div class="row align-items-center">
+    <!-- Sol sütun: Logo -->
+    <div class="col-md-4 text-center text-md-start mb-3 mb-md-0">
+      <img
+        src="wifi-energy-analyzer-logo.png"
+        height="240"
+        alt="Energy Logo"
+        loading="lazy"
+        class="img-fluid"
+      />
+    </div>
 
-    <!-- Paragraf Alanı -->
-    <p>
-      About paragrafı
-    </p>
-
-    <!-- Dark Mode Switch -->
-    <div class="mb-3 d-flex justify-content-end">
-      <div class="form-check form-switch" id="darkModeToggle">
-        <input class="form-check-input" type="checkbox" id="darkModeSwitch">
-        <label class="form-check-label" for="darkModeSwitch">
-          <span id="toggleIcon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-toggle-off toggle-icon" viewBox="0 0 16 16">
-              <path d="M11 4a4 4 0 0 1 0 8H8a5 5 0 0 0 2-4 5 5 0 0 0-2-4zm-6 8a4 4 0 1 1 0-8 4 4 0 0 1 0 8M0 8a5 5 0 0 0 5 5h6a5 5 0 0 0 0-10H5a5 5 0 0 0-5 5"></path>
-            </svg>
-          </span>
-          Dark Mode
-        </label>
-      </div>
+    <!-- Sağ sütun: Paragraf -->
+    <div class="col-md-8">
+      <p>
+        <strong>Wi-Fi Energy Analyzer</strong> is a tool that helps you detect all 
+        devices connected to your computer’s Wi-Fi and analyze their estimated 
+        energy consumption.  
+        <br><br>
+        The tables automatically scan every 30 seconds and refresh every 10 seconds. The toggle switch allows users to switch between dark mode and light mode.
+        <br><br>
+        It uses <b>Python</b> and <b>Flask</b> for the backend to scan devices and 
+        refresh the data, while <b>HTML</b>, <b>CSS</b>, and <b>Bootstrap</b> 
+        handle the design and layout of the website.
+        <br><br>
+        The full source code and project details can be found on my <a href="https://github.com/kkayaeda/wifi-energy-analyzer" target="_blank">
+        GitHub repository
+      </a>.
+      </p>
     </div>
   </div>
+</div>
+
+<!-- Kullanılan Teknolojiler -->
+<div class="container py-5">
+  <h5 class="text-center mb-4">Technologies Used</h5>
+  <div class="row justify-content-center align-items-center">
+
+    <div class="col-4 col-md-2 text-center mb-3">
+      <img src="Python-logo-notext.svg.png" alt="Python" class="tech-logo">
+    </div>
+
+    <div class="col-4 col-md-2 text-center mb-3">
+      <img src="flask-logo.png" alt="Flask" class="tech-logo">
+    </div>
+
+    <div class="col-4 col-md-2 text-center mb-3">
+      <img src="HTML5_logo_and_wordmark.svg.png" alt="HTML" class="tech-logo">
+    </div>
+
+    <div class="col-4 col-md-2 text-center mb-3">
+      <img src="CSS3_logo.svg" alt="CSS" class="tech-logo">
+    </div>
+
+    <div class="col-4 col-md-2 text-center mb-3">
+      <img src="Bootstrap_logo.svg.png" alt="Bootstrap" class="tech-logo">
+    </div>
+
+  </div>
+</div>
+
+<!-- CSS hover efekti -->
+<style>
+  .tech-logo {
+    max-height: 60px;
+    transition: transform 0.3s ease, filter 0.3s ease;
+  }
+  .tech-logo:hover {
+    transform: scale(1.15);
+    filter: brightness(1.2);
+  }
+</style>
+
 
   <!-- Bootstrap JS -->
   <script src="js/bootstrap.bundle.min.js"></script>
@@ -120,32 +197,26 @@
   <!-- Dark Mode Script -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      const toggleSwitch = document.getElementById("darkModeSwitch");
-      const toggleIcon = document.getElementById("toggleIcon");
+      const toggle = document.getElementById("darkModeToggle");
       const body = document.body;
+      let icon = document.getElementById("toggleIcon");
 
-      // Kaydedilen tema varsa onu uygula
+      // Kaydedilen tema varsa uygula
       if (localStorage.getItem("darkMode") === "enabled") {
         body.classList.add("dark-mode");
-        toggleSwitch.checked = true;
-        toggleIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-toggle-on toggle-icon" viewBox="0 0 16 16">
-          <path d="M5 3a5 5 0 0 0 0 10h6a5 5 0 0 0 0-10zm6 9a4 4 0 1 1 0-8 4 4 0 0 1 0 8"></path>
-        </svg>`;
+        icon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-toggle-on toggle-icon" viewBox="0 0 16 16"><path d="M5 3a5 5 0 0 0 0 10h6a5 5 0 0 0 0-10zm6 9a4 4 0 1 1 0-8 4 4 0 0 1 0 8"></path></svg>`;
       }
 
-      toggleSwitch.addEventListener("change", function () {
-        if (toggleSwitch.checked) {
-          body.classList.add("dark-mode");
-          localStorage.setItem("darkMode", "enabled");
-          toggleIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-toggle-on toggle-icon" viewBox="0 0 16 16">
-            <path d="M5 3a5 5 0 0 0 0 10h6a5 5 0 0 0 0-10zm6 9a4 4 0 1 1 0-8 4 4 0 0 1 0 8"></path>
-          </svg>`;
-        } else {
+      toggle.addEventListener("click", function () {
+        icon = document.getElementById("toggleIcon");
+        if (body.classList.contains("dark-mode")) {
           body.classList.remove("dark-mode");
           localStorage.setItem("darkMode", "disabled");
-          toggleIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-toggle-off toggle-icon" viewBox="0 0 16 16">
-            <path d="M11 4a4 4 0 0 1 0 8H8a5 5 0 0 0 2-4 5 5 0 0 0-2-4zm-6 8a4 4 0 1 1 0-8 4 4 0 0 1 0 8M0 8a5 5 0 0 0 5 5h6a5 5 0 0 0 0-10H5a5 5 0 0 0-5 5"></path>
-          </svg>`;
+          icon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-toggle-off toggle-icon" viewBox="0 0 16 16"><path d="M11 4a4 4 0 0 1 0 8H8a5 5 0 0 0 2-4 5 5 0 0 0-2-4zm-6 8a4 4 0 1 1 0-8 4 4 0 0 1 0 8M0 8a5 5 0 0 0 5 5h6a5 5 0 0 0 0-10H5a5 5 0 0 0-5 5"></path></svg>`;
+        } else {
+          body.classList.add("dark-mode");
+          localStorage.setItem("darkMode", "enabled");
+          icon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-toggle-on toggle-icon" viewBox="0 0 16 16"><path d="M5 3a5 5 0 0 0 0 10h6a5 5 0 0 0 0-10zm6 9a4 4 0 1 1 0-8 4 4 0 0 1 0 8"></path></svg>`;
         }
       });
     });
