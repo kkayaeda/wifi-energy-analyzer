@@ -7,408 +7,242 @@
 
   <!-- Bootstrap CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet" />
-
-  <style>
-    /* Navbar Styling */
-    /* Normal Navbar */
-    .navbar-brand {
-    color: #145A32 !important;
-    font-weight: bold;
-    transition: color 0.3s ease;
-    }
-    .navbar {
-    background-color: #eeeeee !important;
-    }
-    .navbar .nav-link {
-    color: #212529 !important;
-    transition: color 0.3s ease;
-    }
-    .navbar .nav-link:hover {
-    color: #000 !important; /* Hover rengi */
-    }
-
-        /* Navbar brand aktifken */
-    .navbar-brand.active {
-    color: #145A32 !important;       /* Aktif rengi */
-    font-weight: bold;
-    font-size: 1rem;
-    }
-
-    /* Dark mode için */
-    body.dark-mode .navbar-brand.active {
-    color: #4CAF50 !important;
-    font-weight: bold;
-    font-size: 1rem;
-    }
-
-
-    /* Dark mode */
-    body.dark-mode .navbar {
-    background-color: #2a2a2a !important;
-    }
-    body.dark-mode .navbar-brand {
-    color: #4CAF50 !important;
-    }
-    body.dark-mode .nav-link {
-    color: #f1f1f1 !important;
-    }
-    body.dark-mode .nav-link:hover {
-    color: #ccc !important;
-    }
-    body.dark-mode .nav-link.active {
-    color: #4CAF50 !important; /* Aktif link rengi */
-    border-bottom: 2px solid #4CAF50;
-    }
-
-    /* Table Styling */
-    .table-rounded {
-      border-radius: 15px;
-      overflow: hidden;
-      border: 1px solid #ccc;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      transition: all 0.4s ease;
-    }
-    .table-rounded thead {
-      background-color: #145A32;
-      color: white;
-      transition: background-color 0.4s ease;
-    }
-    .table-rounded tbody tr {
-      background-color: #ffffff;
-      color: #000000;
-      transition: background-color 0.4s ease, color 0.4s ease;
-    }
-    .table-rounded tbody tr:hover {
-      background-color: #f2f2f2;
-      transition: background-color 0.3s ease;
-    }
-    .table-rounded th, .table-rounded td {
-      border-color: #ccc;
-      transition: border-color 0.4s ease;
-    }
-    body.dark-mode .table-rounded {
-      border-color: #555;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-    }
-    body.dark-mode .table-rounded tbody tr {
-      background-color: #2a2a2a;
-      color: #f1f1f1;
-    }
-    body.dark-mode .table-rounded tbody tr:hover {
-      background-color: #3a3a3a;
-    }
-    body.dark-mode .table-rounded th, 
-    body.dark-mode .table-rounded td {
-      border-color: #666;
-    }
-
-    /* Body Background & Text */
-    body {
-      background-color: #f8f9fa;
-      color: #212529;
-      transition: background-color 0.4s ease, color 0.4s ease;
-    }
-    body.dark-mode {
-      background-color: #1f1f1f;
-      color: #f1f1f1;
-    }
-
-    /* Status Badge */
-    #status {
-      border-radius: 20px;
-      padding: 0.4rem 0.8rem;
-      display: inline-block;
-      transition: all 0.3s ease;
-    }
-    #status:hover {
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
-    /* Dark mode status badge */
-    body.dark-mode #status {
-      background-color: #1f1f1f; /* sitenin dark arka planıyla aynı */
-      color: #f1f1f1; /* beyaz yazı */
-    border: none; /* istersen sınır kaldır */
-    }
-
-    /* Toggle styling */
-    #darkModeToggle { 
-      cursor: pointer; 
-      display: inline-flex; 
-      align-items: center;
-    }
-    .toggle-icon {
-      width: 32px;
-      height: 32px;
-      vertical-align: middle;
-      transition: transform 0.2s ease;
-    }
-    #darkModeToggle:active .toggle-icon {
-      transform: scale(0.95);
-    }
-
-    /* Buttons dark mode */
-    body.dark-mode .btn.btn-outline-danger {
-      border-color: #e74c3c;
-      color: #e74c3c;
-      transition: all 0.3s ease;
-    }
-    body.dark-mode .btn.btn-outline-danger:hover {
-      background-color: #e74c3c;
-      color: #fff;
-      transition: all 0.3s ease;
-    }
-  </style>
+  <link href="style.css" rel="stylesheet"/>
 </head>
-<body>
 
-  <!-- Navbar -->
-  <!-- Navbar -->
+<body>
+<!-- Navbar -->
 <nav class="navbar sticky-top bg-body-tertiary shadow">
   <div class="container-fluid d-flex justify-content-between align-items-center">
     
-    <!-- Sol kısım: Logo + About -->
+    <!-- Sol: Logo + Menü -->
     <div class="d-flex align-items-center">
-        <img
-          src="wifi-energy-analyzer-logo.png"
-          class="me-2"
-          height="60"
-          alt="Energy Logo"
-          loading="lazy"
-        />
-      <a class="navbar-brand me-3 active" href="index.html">
-        Wi-Fi Energy Analyzer
-      </a>
-      <ul class="navbar-nav flex-row">
+      <img src="images/wifi-energy-analyzer-logo.png" class="me-2" height="60" alt="Energy Logo" loading="lazy" />
+      <a class="navbar-brand active" href="index.html">Wi-Fi Energy Analyzer</a>
+      <ul class="navbar-nav d-flex flex-row align-items-center ms-3">
         <li class="nav-item me-3">
           <a class="nav-link" href="about.html">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="contact.html">Contact</a>
         </li>
       </ul>
     </div>
 
-    <!-- Sağ kısım: Dark Mode Toggle -->
-    <div class="form-check form-switch" id="darkModeToggle">
-      <input class="form-check-input" type="checkbox" id="darkModeSwitch">
-      <label class="form-check-label" for="darkModeSwitch">
-        <span id="toggleIcon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-            class="bi bi-toggle-off toggle-icon" viewBox="0 0 16 16">
-            <path
-              d="M11 4a4 4 0 0 1 0 8H8a5 5 0 0 0 2-4 5 5 0 0 0-2-4zm-6 8a4 4 0 1 1 0-8 4 4 0 0 1 0 8M0 8a5 5 0 0 0 5 5h6a5 5 0 0 0 0-10H5a5 5 0 0 0-5 5">
-            </path>
-          </svg>
-        </span>
-      </label>
+    <!-- Sağ: Dark Mode + Login -->
+    <div class="d-flex align-items-center">
+      <div class="form-check form-switch me-3" id="darkModeToggle">
+        <input class="form-check-input" type="checkbox" id="darkModeSwitch">
+        <label class="form-check-label" for="darkModeSwitch">
+          <span id="toggleIcon"></span>
+        </label>
+      </div>
+
+      <div class="vr mx-3 d-none d-md-block"></div>
+
+      <form class="d-flex align-items-center gap-2">
+        <input type="text" class="form-control form-control-sm" placeholder="Username" style="max-width: 140px;">
+        &nbsp;
+        <input type="password" class="form-control form-control-sm" placeholder="Password" style="max-width: 140px;">
+        &nbsp;
+        <button class="btn btn-outline-danger btn-sm" type="submit">Login
+            <img src="images/login.png" class="ms-1" height="20" alt="login-button" loading="lazy"/>
+        </button>
+      </form>
     </div>
   </div>
 </nav>
 
-  <div class="container py-4">
-
-    <!-- Buttons -->
-    <div class="mb-3 d-flex justify-content-between align-items-center">
-      <div>
-        <button type="button" class="btn btn-success" id="scanBtn">Scan Devices 
-            <img
-          src="scan-icon-2.png"
-          class="me-2"
-          height="20"
-          alt="Energy Logo"
-          loading="lazy"
-        />
-        </button>
-        &nbsp;
-        <button type="button" class="btn btn-outline-danger" id="refreshBtn">Refresh
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
-  <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9"/>
-  <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"/>
-</svg>
-        </button>
-      </div>
-      <span class="text-muted" id="lastUpdated">Last updated: -</span>
+<div class="container py-4">
+  <!-- Buttons -->
+  <div class="mb-3 d-flex justify-content-between align-items-center">
+    <div>
+      <button type="button" class="btn btn-success" id="scanBtn">Scan Devices 
+        <img src="images/scan-icon-2.png" class="ms-1" height="20" alt="Energy Logo" loading="lazy"/>
+      </button>
+      &nbsp;
+      <button type="button" class="btn btn-outline-danger" id="refreshBtn">Refresh
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+          <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9"/>
+          <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"/>
+        </svg>
+      </button>
     </div>
-
-    
-
-    <!-- Devices Table -->
-    <div class="table-responsive">
-      <table class="table table-bordered table-hover table-rounded">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">IP</th>
-            <th scope="col">MAC</th>
-            <th scope="col">Device Name</th>
-            <th scope="col">Manufacturer</th>
-            <th scope="col">Connection Time</th>
-            <th scope="col">Energy (kWh)</th>
-          </tr>
-        </thead>
-        <tbody id="deviceBody">
-          <tr><td colspan="7" class="text-center text-muted">No data yet</td></tr>
-        </tbody>
-      </table>
-      <p class="text-right text-muted" id="deviceCount">Devices connected: -</p>
-
-      <!-- Summary Table -->
-      <table class="table table-bordered table-hover table-rounded">
-        <thead>
-          <tr>
-            <th scope="col">Total Energy (kWh)</th>
-            <th scope="col">Cost (₺)</th>
-            <th scope="col">Carbon Emission (kg CO₂)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td id="totalEnergy">-</td>
-            <td id="totalCost">-</td>
-            <td id="totalCarbon">-</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Status -->
-    <div class="mt-2">
-      <span class="badge badge-light" id="status">Ready</span>
-    </div>
+    <span class="text-muted" id="lastUpdated">Last updated: -</span>
   </div>
 
-  <!-- Bootstrap JS -->
-  <script src="js/bootstrap.bundle.min.js"></script>
+  <!-- Devices Table -->
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover table-rounded">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>IP</th>
+          <th>MAC</th>
+          <th>Device Name</th>
+          <th>Manufacturer</th>
+          <th>Connection Time</th>
+          <th>Energy (kWh)</th>
+        </tr>
+      </thead>
+      <tbody id="deviceBody">
+        <tr><td colspan="7" class="text-center text-muted">No data yet</td></tr>
+      </tbody>
+    </table>
+    <p class="text-end text-muted" id="deviceCount">Devices connected: -</p>
 
-  <!-- App Scripts -->
-  <script>
-    // -------- Dark Mode + Toggle Icon ----------
-    (function() {
-      const body = document.body;
-      const toggle = document.getElementById("darkModeToggle");
+    <!-- Summary Table -->
+    <table class="table table-bordered table-hover table-rounded">
+      <thead>
+        <tr>
+          <th>Total Energy (kWh)</th>
+          <th>Cost (₺)</th>
+          <th>Carbon Emission (kg CO₂)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td id="totalEnergy">-</td>
+          <td id="totalCost">-</td>
+          <td id="totalCarbon">-</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-      const svgOn = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
-             class="bi bi-toggle-on toggle-icon" viewBox="0 0 16 16" aria-hidden="true">
-          <path d="M5 3a5 5 0 0 0 0 10h6a5 5 0 0 0 0-10zm6 9a4 4 0 1 1 0-8 4 4 0 0 1 0 8"></path>
-        </svg>`;
-      const svgOff = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
-             class="bi bi-toggle-off toggle-icon" viewBox="0 0 16 16" aria-hidden="true">
-          <path d="M11 4a4 4 0 0 1 0 8H8a5 5 0 0 0 2-4 5 5 0 0 0-2-4zm-6 8a4 4 0 1 1 0-8 4 4 0 0 1 0 8M0 8a5 5 0 0 0 5 5h6a5 5 0 0 0 0-10H5a5 5 0 0 0-5 5"></path>
-        </svg>`;
+  <!-- Status -->
+  <div class="mt-2">
+    <span class="badge badge-light" id="status">Ready</span>
+  </div>
+</div>
 
-      function setIcon(isDark) {
-        toggle.innerHTML = isDark ? svgOn : svgOff;
-      }
+<!-- Bootstrap JS -->
+<script src="js/bootstrap.bundle.min.js"></script>
 
-      // Load saved theme
-      const savedDark = localStorage.getItem("darkMode") === "enabled";
-      body.classList.toggle("dark-mode", savedDark);
-      setIcon(savedDark);
+<!-- App Scripts -->
+<script>
+  // Dark Mode + Toggle Icon
+  (function() {
+    const body = document.body;
+    const toggle = document.getElementById("darkModeToggle");
 
-      // Click to toggle
-      toggle.addEventListener("click", function () {
-        const makeDark = !body.classList.contains("dark-mode");
-        body.classList.toggle("dark-mode", makeDark);
-        localStorage.setItem("darkMode", makeDark ? "enabled" : "disabled");
-        setIcon(makeDark);
-      });
-    })();
+    const svgOn = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+      class="bi bi-toggle-on toggle-icon" viewBox="0 0 16 16" aria-hidden="true">
+      <path d="M5 3a5 5 0 0 0 0 10h6a5 5 0 0 0 0-10zm6 9a4 4 0 1 1 0-8 4 4 0 0 1 0 8"></path></svg>`;
+    const svgOff = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+      class="bi bi-toggle-off toggle-icon" viewBox="0 0 16 16" aria-hidden="true">
+      <path d="M11 4a4 4 0 0 1 0 8H8a5 5 0 0 0 2-4 5 5 0 0 0-2-4zm-6 8a4 4 0 1 1 0-8 4 4 0 0 1 0 8M0 8a5 5 0 0 0 5 5h6a5 5 0 0 0 0-10H5a5 5 0 0 0-5 5"></path></svg>`;
 
-    // -------- API & Table Logic ----------
-    const API_BASE = 'http://127.0.0.1:5000';
-    const deviceBody = document.getElementById('deviceBody');
-    const statusEl = document.getElementById('status');
-    const scanBtn = document.getElementById('scanBtn');
-    const refreshBtn = document.getElementById('refreshBtn');
-    const deviceCountEl = document.getElementById('deviceCount');
-    const lastUpdatedEl = document.getElementById('lastUpdated');
-
-    const totalEnergyEl = document.getElementById('totalEnergy');
-    const totalCostEl = document.getElementById('totalCost');
-    const totalCarbonEl = document.getElementById('totalCarbon');
-
-    const COST_PER_KWH = 2.6;
-    const CO2_PER_KWH = 0.475;
-
-    function setStatus(text){ statusEl.textContent = text; }
-
-    function updateSummary(list){
-      let totalEnergy = 0;
-      list.forEach(d => {
-        const val = parseFloat(d.energy);
-        if(!isNaN(val)) totalEnergy += val;
-      });
-
-      if(totalEnergy > 0){
-        const totalCost = totalEnergy * COST_PER_KWH;
-        const totalCarbon = totalEnergy * CO2_PER_KWH;
-        totalEnergyEl.textContent = totalEnergy.toFixed(2);
-        totalCostEl.textContent = totalCost.toFixed(2);
-        totalCarbonEl.textContent = totalCarbon.toFixed(2);
-      } else {
-        totalEnergyEl.textContent = "-";
-        totalCostEl.textContent = "-";
-        totalCarbonEl.textContent = "-";
-      }
+    function setIcon(isDark) {
+      toggle.innerHTML = isDark ? svgOn : svgOff;
     }
 
-    function renderRows(list, last_updated){
-      deviceBody.innerHTML = '';
-      if(!list || list.length === 0){
-        deviceBody.innerHTML = '<tr><td colspan="7" class="text-center text-muted">No devices found</td></tr>';
-        deviceCountEl.textContent = "Devices connected: 0";
-        lastUpdatedEl.textContent = "Last updated: -";
-        updateSummary([]);
-        return;
-      }
+    const savedDark = localStorage.getItem("darkMode") === "enabled";
+    body.classList.toggle("dark-mode", savedDark);
+    setIcon(savedDark);
 
-      list.forEach((d, i) => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${i+1}</td>
-          <td>${d.ip || '-'}</td>
-          <td>${d.mac || '-'}</td>
-          <td>${d.hostname || '-'}</td>
-          <td>${d.vendor || '-'}</td>
-          <td>${d.connectiontime || '-'}</td>
-          <td>${d.energy || '-'}</td>
-        `;
-        deviceBody.appendChild(tr);
-      });
+    toggle.addEventListener("click", function () {
+      const makeDark = !body.classList.contains("dark-mode");
+      body.classList.toggle("dark-mode", makeDark);
+      localStorage.setItem("darkMode", makeDark ? "enabled" : "disabled");
+      setIcon(makeDark);
+    });
+  })();
 
-      deviceCountEl.textContent = `Devices connected: ${list.length}`;
-      lastUpdatedEl.textContent = `Last updated: ${last_updated || "-"}`;
-      updateSummary(list);
+  // API & Table Logic
+  const API_BASE = 'http://127.0.0.1:5000';
+  const deviceBody = document.getElementById('deviceBody');
+  const statusEl = document.getElementById('status');
+  const scanBtn = document.getElementById('scanBtn');
+  const refreshBtn = document.getElementById('refreshBtn');
+  const deviceCountEl = document.getElementById('deviceCount');
+  const lastUpdatedEl = document.getElementById('lastUpdated');
+
+  const totalEnergyEl = document.getElementById('totalEnergy');
+  const totalCostEl = document.getElementById('totalCost');
+  const totalCarbonEl = document.getElementById('totalCarbon');
+
+  const COST_PER_KWH = 2.6;
+  const CO2_PER_KWH = 0.475;
+
+  function setStatus(text){ statusEl.textContent = text; }
+
+  function updateSummary(list){
+    let totalEnergy = 0;
+    list.forEach(d => {
+      const val = parseFloat(d.energy);
+      if(!isNaN(val)) totalEnergy += val;
+    });
+
+    if(totalEnergy > 0){
+      totalEnergyEl.textContent = totalEnergy.toFixed(2);
+      totalCostEl.textContent = (totalEnergy * COST_PER_KWH).toFixed(2);
+      totalCarbonEl.textContent = (totalEnergy * CO2_PER_KWH).toFixed(2);
+    } else {
+      totalEnergyEl.textContent = "-";
+      totalCostEl.textContent = "-";
+      totalCarbonEl.textContent = "-";
+    }
+  }
+
+  function renderRows(list, last_updated){
+    deviceBody.innerHTML = '';
+    if(!list || list.length === 0){
+      deviceBody.innerHTML = '<tr><td colspan="7" class="text-center text-muted">No devices found</td></tr>';
+      deviceCountEl.textContent = "Devices connected: 0";
+      lastUpdatedEl.textContent = "Last updated: -";
+      updateSummary([]);
+      return;
     }
 
-    async function fetchDevices(){
-      setStatus('Loading...');
-      try {
-        const res = await fetch(`${API_BASE}/devices`);
-        const data = await res.json();
-        renderRows(data.devices, data.last_updated);
-        setStatus('Updated');
-      } catch (err) {
-        setStatus('Connection Error');
-      }
-    }
+    list.forEach((d, i) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${i+1}</td>
+        <td>${d.ip || '-'}</td>
+        <td>${d.mac || '-'}</td>
+        <td>${d.hostname || '-'}</td>
+        <td>${d.vendor || '-'}</td>
+        <td>${d.connectiontime || '-'}</td>
+        <td>${d.energy || '-'}</td>
+      `;
+      deviceBody.appendChild(tr);
+    });
 
-    async function startScan(){
-      setStatus('Scanning...');
-      scanBtn.disabled = true;
-      try {
-        await fetch(`${API_BASE}/scan`, { method: 'POST' });
-        await fetchDevices();
-      } catch (err) {
-        setStatus('Scanning failed to start');
-      } finally {
-        scanBtn.disabled = false;
-      }
-    }
+    deviceCountEl.textContent = `Devices connected: ${list.length}`;
+    lastUpdatedEl.textContent = `Last updated: ${last_updated || "-"}`;
+    updateSummary(list);
+  }
 
-    scanBtn.addEventListener('click', startScan);
-    refreshBtn.addEventListener('click', fetchDevices);
-    setInterval(fetchDevices, 10000);
-    setInterval(startScan, 30000);
-  </script>
+  async function fetchDevices(){
+    setStatus('Loading...');
+    try {
+      const res = await fetch(`${API_BASE}/devices`);
+      const data = await res.json();
+      renderRows(data.devices, data.last_updated);
+      setStatus('Updated');
+    } catch (err) {
+      setStatus('Connection Error');
+    }
+  }
+
+  async function startScan(){
+    setStatus('Scanning...');
+    scanBtn.disabled = true;
+    try {
+      await fetch(`${API_BASE}/scan`, { method: 'POST' });
+      await fetchDevices();
+    } catch (err) {
+      setStatus('Scanning failed to start');
+    } finally {
+      scanBtn.disabled = false;
+    }
+  }
+
+  scanBtn.addEventListener('click', startScan);
+  refreshBtn.addEventListener('click', fetchDevices);
+  setInterval(fetchDevices, 10000);
+  setInterval(startScan, 30000);
+</script>
 </body>
 </html>
