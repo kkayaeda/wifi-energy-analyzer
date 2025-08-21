@@ -1,10 +1,9 @@
-from flask import Flask, jsonify, render_template, request, redirect, url_for, session
+from flask import Flask, jsonify, render_template
 from flask_cors import CORS
 import subprocess
 import re
 import socket
 import time
-import sqlite3
 
 # MAC vendor lookup için
 try:
@@ -16,7 +15,6 @@ except Exception as e:
     mac_lookup = None
 
 app = Flask(__name__)
-app.secret_key = "supersecretkey"  # session için gerekli
 CORS(app)
 
 # Cihaz listesi cache
@@ -119,8 +117,6 @@ def get_devices():
 
 @app.route("/scan", methods=["POST"])
 def start_scan():
-    if "username" not in session:
-        return jsonify({"error": "Unauthorized"}), 401
     scan_devices()
     return jsonify({
         "status": "scanning started",
@@ -130,36 +126,10 @@ def start_scan():
 
 @app.route("/")
 def index():
-    global last_updated
-    logged_in = "username" in session
-    if last_updated is None and logged_in:
-        scan_devices()
+    scan_devices()  # Sayfa açıldığında otomatik scan
     return render_template("index.html",
-                           device_count=len(devices_cache),
-                           last_updated=last_updated,
-                           logged_in=logged_in)
-
-@app.route("/login", methods=["POST"])
-def login():
-    username = request.form["username"]
-    password = request.form["password"]
-
-    conn = sqlite3.connect("database.db")
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password))
-    user = cursor.fetchone()
-    conn.close()
-
-    if user:
-        session["username"] = username
-        return redirect(url_for("index"))
-    else:
-        return "Invalid credentials, please try again."
-
-@app.route("/logout")
-def logout():
-    session.pop("username", None)
-    return redirect(url_for("index"))
+                           devices=devices_cache,
+                           last_updated=last_updated)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)

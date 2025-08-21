@@ -17,7 +17,7 @@
     
     <!-- Sol: Logo + Menü -->
     <div class="d-flex align-items-center">
-      <img src="images/wifi-energy-analyzer-logo.png" class="me-2" height="60" alt="Energy Logo" loading="lazy" />
+      <img src="images/logo.png" class="me-2" height="60" alt="Energy Logo" loading="lazy" />
       <a class="navbar-brand" href="index.html">Wi-Fi Energy Analyzer</a>
       <ul class="navbar-nav d-flex flex-row align-items-center ms-3">
         <li class="nav-item me-3">
@@ -76,36 +76,8 @@
 
   <!-- Bootstrap JS -->
   <script src="js/bootstrap.bundle.min.js"></script>
+  <!-- App Scripts -->
+  <script src="java.js"></script>
 
-  <!-- Dark Mode Script -->
-  <script>
-    // Dark Mode + Toggle Icon
-  (function() {
-    const body = document.body;
-    const toggle = document.getElementById("darkModeToggle");
-
-    const svgOn = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
-      class="bi bi-toggle-on toggle-icon" viewBox="0 0 16 16" aria-hidden="true">
-      <path d="M5 3a5 5 0 0 0 0 10h6a5 5 0 0 0 0-10zm6 9a4 4 0 1 1 0-8 4 4 0 0 1 0 8"></path></svg>`;
-    const svgOff = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
-      class="bi bi-toggle-off toggle-icon" viewBox="0 0 16 16" aria-hidden="true">
-      <path d="M11 4a4 4 0 0 1 0 8H8a5 5 0 0 0 2-4 5 5 0 0 0-2-4zm-6 8a4 4 0 1 1 0-8 4 4 0 0 1 0 8M0 8a5 5 0 0 0 5 5h6a5 5 0 0 0 0-10H5a5 5 0 0 0-5 5"></path></svg>`;
-
-    function setIcon(isDark) {
-      toggle.innerHTML = isDark ? svgOn : svgOff;
-    }
-
-    const savedDark = localStorage.getItem("darkMode") === "enabled";
-    body.classList.toggle("dark-mode", savedDark);
-    setIcon(savedDark);
-
-    toggle.addEventListener("click", function () {
-      const makeDark = !body.classList.contains("dark-mode");
-      body.classList.toggle("dark-mode", makeDark);
-      localStorage.setItem("darkMode", makeDark ? "enabled" : "disabled");
-      setIcon(makeDark);
-    });
-  })();
-  </script>
 </body>
 </html>

@@ -1,175 +1,195 @@
-    body {
-      background-color: #f8f9fa;
-      color: #212529;
-      transition: background-color 0.4s ease, color 0.4s ease;
-    }
-    body.dark-mode {
-      background-color: #1f1f1f;
-      color: #f1f1f1;
-    }
-    /* Navbar Styling */
-    .navbar-brand {
-      color: #145A32 !important;
-      font-weight: bold;
-      font-size: 20px ;
-      transition: color 0.3s ease;
-    }
-    .navbar {
-      background-color: #eeeeee !important;
-    }
-    .navbar .nav-link {
-      color: #212529 !important;
-      transition: color 0.3s ease;
-      padding: 8px;
-    }
-    .navbar .nav-link:hover {
-      color: #000 !important;
-    }
-
-    .navbar-brand.active {
-      color: #145A32 !important;
-      font-weight: bold;
-    }
-    body.dark-mode .navbar-brand.active {
-      color: #4CAF50 !important;
-      font-weight: bold;
-    }
-
-    body.dark-mode .navbar {
-      background-color: #2a2a2a !important;
-    }
-    body.dark-mode .navbar-brand {
-      color: #f1f1f1 !important;
-    }
-    body.dark-mode .nav-link {
-      color: #f1f1f1 !important;
-    }
-    body.dark-mode .nav-link:hover {
-      color: #ccc !important;
-    }
-    body.dark-mode .nav-link.active {
-      color: #4CAF50 !important;
-      font-weight: bold;
-    }
-
-    /* Table Styling */
-    .table-rounded {
-      border-radius: 15px;
-      overflow: hidden;
-      border: 1px solid #ccc;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      transition: all 0.4s ease;
-    }
-    .table-rounded thead {
-      background-color: #145A32;
-      color: white;
-      transition: background-color 0.4s ease;
-    }
-    .table-rounded tbody tr {
-      background-color: #ffffff;
-      color: #000000;
-      transition: background-color 0.4s ease, color 0.4s ease;
-    }
-    .table-rounded tbody tr:hover {
-      background-color: #f2f2f2;
-      transition: background-color 0.3s ease;
-    }
-    .table-rounded th, .table-rounded td {
-      border-color: #ccc;
-      transition: border-color 0.4s ease;
-    }
-    body.dark-mode .table-rounded {
-      border-color: #555;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-    }
-    body.dark-mode .table-rounded tbody tr {
-      background-color: #2a2a2a;
-      color: #f1f1f1;
-    }
-    body.dark-mode .table-rounded tbody tr:hover {
-      background-color: #3a3a3a;
-    }
-    body.dark-mode .table-rounded th, 
-    body.dark-mode .table-rounded td {
-      border-color: #666;
-    }
-
-    body {
-      background-color: #f8f9fa;
-      color: #212529;
-      transition: background-color 0.4s ease, color 0.4s ease;
-    }
-    body.dark-mode {
-      background-color: #1f1f1f;
-      color: #f1f1f1;
-    }
-
-    #status {
-      border-radius: 20px;
-      padding: 0.4rem 0.8rem;
-      display: inline-block;
-      transition: all 0.3s ease;
-    }
-    #status:hover {
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
-    body.dark-mode #status {
-      background-color: #1f1f1f;
-      color: #f1f1f1;
-      border: none;
-    }
-
-    #darkModeToggle { 
-      cursor: pointer; 
-      display: inline-flex; 
-      align-items: center;
-    }
-    .toggle-icon {
-      width: 32px;
-      height: 32px;
-      vertical-align: middle;
-      transition: transform 0.2s ease;
-    }
-    #darkModeToggle:active .toggle-icon {
-      transform: scale(0.95);
-    }
-
-    body.dark-mode .btn.btn-outline-danger {
-      border-color: #e74c3c;
-      color: #e74c3c;
-      transition: all 0.3s ease;
-    }
-    body.dark-mode .btn.btn-outline-danger:hover {
-      background-color: #e74c3c;
-      color: #fff;
-      transition: all 0.3s ease;
-    }
-
-        /* Page Content */
-    .container h1 {
-      font-weight: bold;
-    }
-
-
-    /* Dark mode input ve button renkleri */
-body.dark-mode .form-control {
-  background-color: #3a3a3a; /* koyu gri arka plan */
-  color: #f1f1f1;            /* açık yazı rengi */
-  border-color: #555;         /* koyu sınır */
+/* ------------------ Base Body ------------------ */
+body {
+  background-color: #f8f9fa;
+  color: #212529;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-body.dark-mode .form-control::placeholder {
-  color: #bbb;                /* placeholder rengi açık gri */
+body.dark-mode {
+  background-color: #1f1f1f;
+  color: #f1f1f1;
 }
 
-body.dark-mode .btn-outline-danger {
+/* ------------------ Navbar ------------------ */
+.navbar {
+  background-color: #eeeeee !important;
+  transition: background-color 0.3s ease;
+}
+
+body.dark-mode .navbar {
+  background-color: #2a2a2a !important;
+}
+
+.navbar-brand {
+  color: #145A32 !important;
+  font-size: 20px;
+  transition: color 0.3s ease;
+}
+
+body.dark-mode .navbar-brand {
+  color: #f1f1f1 !important;
+}
+
+.navbar-brand.active {
+  font-weight: bold;
+}
+
+body.dark-mode .navbar-brand.active {
+  color: #4CAF50 !important;
+}
+
+.navbar .nav-link {
+  color: #212529 !important;
+  transition: color 0.3s ease, font-weight 0.3s ease;
+  padding: 8px;
+}
+
+.navbar .nav-link:hover {
+  color: #000 !important;
+}
+
+.navbar .nav-link:active,
+.navbar .nav-link.active {
+  font-weight: bold;
+  color: #145A32 !important;
+}
+
+body.dark-mode .nav-link {
+  color: #f1f1f1 !important;
+}
+
+body.dark-mode .nav-link:hover {
+  color: #ccc !important;
+}
+
+body.dark-mode .nav-link.active,
+body.dark-mode .nav-link:active {
+  color: #4CAF50 !important;
+  font-weight: bold;
+}
+
+/* ------------------ Tables ------------------ */
+.table-rounded {
+  border-radius: 15px;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: all 0.4s ease;
+}
+
+.table-rounded thead {
+  background-color: #145A32;
+  color: white;
+  transition: background-color 0.4s ease;
+}
+
+.table-rounded tbody tr {
+  background-color: #ffffff;
+  color: #000000;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+.table-rounded tbody tr:hover {
+  background-color: #f2f2f2;
+  transition: background-color 0.3s ease;
+}
+
+.table-rounded th, .table-rounded td {
+  border-color: #ccc;
+  transition: border-color 0.4s ease;
+}
+
+body.dark-mode .table-rounded {
+  border-color: #555;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+body.dark-mode .table-rounded tbody tr {
+  background-color: #2a2a2a;
+  color: #f1f1f1;
+}
+
+body.dark-mode .table-rounded tbody tr:hover {
+  background-color: #3a3a3a;
+}
+
+body.dark-mode .table-rounded th, 
+body.dark-mode .table-rounded td {
+  border-color: #666;
+}
+
+/* ------------------ Status Badge ------------------ */
+#status {
+  border-radius: 20px;
+  padding: 0.4rem 0.8rem;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+#status:hover {
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+body.dark-mode #status {
+  background-color: #1f1f1f;
+  color: #f1f1f1;
+  border: none;
+}
+
+/* ------------------ Dark Mode Toggle ------------------ */
+#darkModeToggle { 
+  cursor: pointer; 
+  display: inline-flex; 
+  align-items: center;
+}
+
+.toggle-icon {
+  width: 32px;
+  height: 32px;
+  vertical-align: middle;
+  transition: transform 0.2s ease;
+}
+
+#darkModeToggle:active .toggle-icon {
+  transform: scale(0.95);
+}
+
+/* ------------------ Buttons ------------------ */
+body.dark-mode .btn.btn-outline-danger {
   border-color: #e74c3c;
   color: #e74c3c;
   background-color: transparent;
   transition: all 0.3s ease;
 }
 
-body.dark-mode .btn-outline-danger:hover {
+body.dark-mode .btn.btn-outline-danger:hover {
   background-color: #e74c3c;
   color: #fff;
+}
+
+/* ------------------ Form Inputs ------------------ */
+body.dark-mode .form-control {
+  background-color: #3a3a3a;
+  color: #f1f1f1;
+  border-color: #555;
+}
+
+body.dark-mode .form-control::placeholder {
+  color: #bbb;
+}
+
+/* ------------------ Page Content ------------------ */
+.container h1 {
+  font-weight: bold;
+}
+
+/* ------------------ Logos Hover ------------------ */
+.tech-logo {
+  max-height: 60px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.tech-logo:hover {
+  transform: scale(1.15);
+  filter: brightness(1.2);
 }
