@@ -4,7 +4,9 @@ import subprocess
 import re
 import socket
 import time
-import sqlite3
+from datetime import datetime
+from database import insert_energy   # ✅ veritabanı fonksiyonu eklendi
+
 
 # MAC vendor lookup için
 try:
@@ -21,6 +23,12 @@ CORS(app)
 # Cihaz listesi cache
 devices_cache = []
 last_updated = None  # Son güncelleme zamanını tutacak
+
+# Energy history (grafik için)
+energy_history = []
+cost_history = []
+co2_history = []
+time_labels = []
 
 def get_wifi_ip_base():
     try:
@@ -123,14 +131,27 @@ def scan_devices():
                         "vendor": vendor,
                         "connected_since": connected_since,
                         "connectiontime": f"{connected_minutes} min",
-                        "energy": f"{energy_kwh} kWh",
+                        "energy": round(energy_kwh, 6),          # float olarak sakla
+                        "energy_str": f"{energy_kwh} kWh",       # string gösterim
                         "status": "Online"
                     })
     except Exception as e:
         print("Scan error:", e)
 
     devices_cache = new_devices
-    last_updated = time.strftime("%Y-%m-%d %H:%M:%S")
+    last_updated = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    # Energy history güncelle
+    total_energy = sum(d["energy"] for d in devices_cache)
+    energy_history.append(total_energy)
+    cost_history.append(round(total_energy * 2.6, 2))
+    co2_history.append(round(total_energy * 0.475, 3))
+    time_labels.append(datetime.now().strftime("%H:%M"))
+    total_cost = round(total_energy * 2.6, 2)
+    total_co2 = round(total_energy * 0.475, 3)
+
+    insert_energy(total_energy, total_cost, total_co2)
+
 
 @app.route("/devices", methods=["GET"])
 def get_devices():
@@ -147,6 +168,16 @@ def start_scan():
         "devices": devices_cache,
         "count": len(devices_cache),
         "last_updated": last_updated
+    })
+
+@app.route("/energy_data", methods=["GET"])
+def energy_data():
+    # Son 60 dakika verisini gönder
+    return jsonify({
+        "labels": time_labels[-60:],
+        "energy": energy_history[-60:],
+        "cost": cost_history[-60:],
+        "co2": co2_history[-60:]
     })
 
 @app.route("/")

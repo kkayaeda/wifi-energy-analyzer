@@ -3,7 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Contact</title>
+  <title>Energy Chart</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <!-- Bootstrap CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet" />
@@ -21,13 +23,13 @@
       <a class="navbar-brand" href="index.html">Wi-Fi Energy Analyzer</a>
       <ul class="navbar-nav d-flex flex-row align-items-center ms-3">
         <li class="nav-item">
-          <a class="nav-link" href="energy-chart.html">Energy Chart</a>
+          <a class="nav-link active" href="energy-chart.html">Energy Chart</a>
         </li>
         <li class="nav-item me-3">
           <a class="nav-link" href="about.html">About</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="contact.html">Contact</a>
+          <a class="nav-link" href="contact.html">Contact</a>
         </li>
       </ul>
     </div>
@@ -56,25 +58,7 @@
   </div>
 </nav>
 
-<!-- Page Content -->
-<div class="container py-4">
-  <div class="align-items-center">
-    <!-- Sol sütun: Logo -->
-    <div class="text-left">
-      <p>
-        I'm Eda Kaya. I'm a 3rd year Electrical-Electronics Engineering student in Gazi University in Ankara, Turkey. I'm learning both electronics and programming and this is my internship project.
-        <br><br>
-        Contact me at:</p>
-    <a href="https://www.linkedin.com/in/cemile-eda-kaya-1505e/" target="_blank">
-    <img src="images/linkedin-logo.svg" height="35" loading="lazy">
-    &nbsp;
-    <a href="https://github.com/kkayaeda/wifi-energy-analyzer" target="_blank">
-    <img src="images/Github-logo.svg" height="45" loading="lazy">
-    &nbsp;
-    <a href="mailto: edakaya.1505@gmail.com" target="_blank">
-    <img src="images/gmail-icon-seeklogo.svg" height="42" loading="lazy">
-    </a>
-    </div>
+<canvas id="energyChart" width="1200" height="600"></canvas>
 
 
   <!-- Bootstrap JS -->

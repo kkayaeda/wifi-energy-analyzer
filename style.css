@@ -194,3 +194,30 @@ body.dark-mode .form-control::placeholder {
   transform: scale(1.15);
   filter: brightness(1.2);
 }
+
+/* ------------------ Energy Chart ------------------ */
+#energyChart {
+  background: #e2e2e2;
+  padding: 10px;
+  border-radius: 8px;
+  max-width: 2000px;
+  margin: 40px auto;
+  display: block;
+  box-shadow: 0 5px 12px #a0a0a0;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.dark-mode #energyChart {
+  background: #2a2a2a;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+/* ------------------ Chart Legend & Lines (Optional) ------------------ */
+#energyChart .chart-legend {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+#energyChart .line {
+  border-width: 2px;
+}
