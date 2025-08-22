@@ -4,6 +4,7 @@ import subprocess
 import re
 import socket
 import time
+import sqlite3
 
 # MAC vendor lookup için
 try:
@@ -71,6 +72,17 @@ def get_vendor(mac):
     except:
         return "-"
 
+def is_alive(ip):
+    try:
+        result = subprocess.run(
+            ["ping", "-n", "1", "-w", "1000", ip],  # Windows
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL
+        )
+        return result.returncode == 0
+    except Exception:
+        return False
+
 def scan_devices():
     global devices_cache, last_updated
     new_devices = []
@@ -80,12 +92,24 @@ def scan_devices():
 
     try:
         output = subprocess.check_output("arp -a", shell=True, text=True)
+        current_macs = set()  # Bu taramada görülen MAC'ler
+
         for line in output.splitlines():
             match = re.search(r"(\d+\.\d+\.\d+\.\d+)\s+([\w-]+)\s+(\w+)", line)
             if match:
                 ip = match.group(1)
                 mac = match.group(2)
+
+                # Gateway IP'yi atla
+                if ip == f"{base_ip}.1":
+                    continue
+
                 if is_valid_device(ip, mac, base_ip):
+                    alive = is_alive(ip)
+                    if not alive:
+                        continue  # Ping yoksa listeden düş
+
+                    current_macs.add(mac)
                     existing = next((d for d in devices_cache if d["mac"] == mac), None)
                     connected_since = existing["connected_since"] if existing else time.time()
                     connected_minutes = int((time.time() - connected_since) / 60)
@@ -99,7 +123,8 @@ def scan_devices():
                         "vendor": vendor,
                         "connected_since": connected_since,
                         "connectiontime": f"{connected_minutes} min",
-                        "energy": f"{energy_kwh} kWh"
+                        "energy": f"{energy_kwh} kWh",
+                        "status": "Online"
                     })
     except Exception as e:
         print("Scan error:", e)
@@ -119,17 +144,19 @@ def get_devices():
 def start_scan():
     scan_devices()
     return jsonify({
-        "status": "scanning started",
+        "devices": devices_cache,
         "count": len(devices_cache),
         "last_updated": last_updated
     })
 
 @app.route("/")
 def index():
-    scan_devices()  # Sayfa açıldığında otomatik scan
+    global last_updated
+    if last_updated is None:
+        scan_devices()
     return render_template("index.html",
-                           devices=devices_cache,
+                           device_count=len(devices_cache),
                            last_updated=last_updated)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5000, debug=True)

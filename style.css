@@ -21,8 +21,8 @@ body.dark-mode .navbar {
 }
 
 .navbar-brand {
-  color: #145A32 !important;
   font-size: 20px;
+  color: #1f1f1f !important;
   transition: color 0.3s ease;
 }
 
@@ -32,6 +32,7 @@ body.dark-mode .navbar-brand {
 
 .navbar-brand.active {
   font-weight: bold;
+  color: #145A32 !important;
 }
 
 body.dark-mode .navbar-brand.active {
