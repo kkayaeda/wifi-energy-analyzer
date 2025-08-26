@@ -172,6 +172,9 @@ async function updateEnergyChart(){
     }
 }
 
+
+
+
 // İlk yükleme
 updateEnergyChart();
 

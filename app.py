@@ -5,7 +5,10 @@ import re
 import socket
 import time
 from datetime import datetime
-from database import insert_energy   # ✅ veritabanı fonksiyonu eklendi
+from database import insert_energy, upsert_devices  # ✅ veritabanı fonksiyonu eklendi
+from chart import update_chart_data
+import sqlite3
+
 
 
 # MAC vendor lookup için
@@ -135,6 +138,12 @@ def scan_devices():
                         "energy_str": f"{energy_kwh} kWh",       # string gösterim
                         "status": "Online"
                     })
+                    try:
+                        upsert_devices(ip, mac, resolve_hostname(ip), f"{energy_kwh} kWh")
+                    except Exception as e:
+                        print(f"DB upsert error for {ip} / {mac}:", e)
+
+
     except Exception as e:
         print("Scan error:", e)
 
@@ -150,7 +159,10 @@ def scan_devices():
     total_cost = round(total_energy * 2.6, 2)
     total_co2 = round(total_energy * 0.475, 3)
 
+
+    update_chart_data(total_energy, total_cost, total_co2)
     insert_energy(total_energy, total_cost, total_co2)
+    
 
 
 @app.route("/devices", methods=["GET"])
@@ -188,6 +200,65 @@ def index():
     return render_template("index.html",
                            device_count=len(devices_cache),
                            last_updated=last_updated)
+
+
+
+
+
+
+# Devices tablosundaki verileri çek (History için)
+
+DB_NAME = "database.db"
+
+@app.route("/api/devices", methods=["GET"])
+def api_devices():
+    try:
+        conn = sqlite3.connect(DB_NAME)
+        cursor = conn.cursor()
+        cursor.execute("SELECT ip, mac, device_name, connection_time, energy, date FROM devices")
+        rows = cursor.fetchall()
+        conn.close()
+
+        devices = [
+            {
+                "ip": row[0],
+                "mac": row[1],
+                "device_name": row[2],
+                "connection_time": row[3],
+                "energy": row[4],
+                "date": row[5]
+            } for row in rows
+        ]
+        return jsonify(devices)
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
+# Energy tablosundaki verileri çek (History için)
+@app.route("/api/energy", methods=["GET"])
+def api_energy():
+    try:
+        conn = sqlite3.connect(DB_NAME)
+        cursor = conn.cursor()
+        cursor.execute("SELECT total_energy, cost, co2, date FROM energy")
+        rows = cursor.fetchall()
+        conn.close()
+
+        energy = [
+            {
+                "total_energy": row[0],
+                "cost": row[1],
+                "co2": row[2],
+                "date": row[3]
+            } for row in rows
+        ]
+        return jsonify(energy)
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
+
+
+
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

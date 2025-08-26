@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>History</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet" />
+  <link href="style.css" rel="stylesheet"/>
+</head>
+
+<body>
+<!-- Navbar -->
+<nav class="navbar sticky-top bg-body-tertiary shadow">
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+    
+    <!-- Sol: Logo + Menü -->
+    <div class="d-flex align-items-center">
+      <img src="images/logo.png" class="me-2" height="60" alt="Energy Logo" loading="lazy" style="color: #1f1f1f !important;"/>
+      <a class="navbar-brand" href="index.html">Wi-Fi Energy Analyzer</a>
+      <ul class="navbar-nav d-flex flex-row align-items-center ms-3">
+        <li class="nav-item">
+          <a class="nav-link" href="energy-chart.html">Energy Chart</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="history.html">History</a>
+        </li>
+        <li class="nav-item me-3">
+          <a class="nav-link" href="about.html">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="contact.html">Contact</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Sağ: Dark Mode + Login -->
+    <div class="d-flex align-items-center">
+      <div class="form-check form-switch me-3" id="darkModeToggle">
+        <input class="form-check-input" type="checkbox" id="darkModeSwitch">
+        <label class="form-check-label" for="darkModeSwitch">
+          <span id="toggleIcon"></span>
+        </label>
+      </div>
+
+      <div class="vr mx-3 d-none d-md-block"></div>
+
+      <form class="d-flex align-items-center gap-2">
+        <input type="text" class="form-control form-control-sm" placeholder="Username" style="max-width: 140px;">
+        &nbsp;
+        <input type="password" class="form-control form-control-sm" placeholder="Password" style="max-width: 140px;">
+        &nbsp;
+        <button class="btn btn-outline-danger btn-sm" type="submit">Login
+            <img src="images/login.png" class="ms-1" height="20" alt="login-button" loading="lazy"/>
+        </button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<div class="container py-4">
+  <!-- Devices Table -->
+  <p class="text-end text-center">Devices</p>
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover table-rounded">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>IP</th>
+          <th>MAC</th>
+          <th>Device Name</th>
+          <th>Connection Time</th>
+          <th>Energy (kWh)</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody id="deviceTableBody">
+        <tr><td colspan="7" class="text-center text-muted">No data yet</td></tr>
+      </tbody>
+    </table>
+    
+
+    <!-- Energy Table -->
+    <p class="text-end text-center">Energy</p>
+    <table class="table table-bordered table-hover table-rounded">
+      <thead>
+        <tr>
+          <th>Total Energy (kWh)</th>
+          <th>Cost (₺)</th>
+          <th>Carbon Emission (kg CO₂)</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody id="energyTableBody">
+        <tr><td colspan="4" class="text-center text-muted">No data yet</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <button type="button" class="btn btn-outline-danger" id="updateBtn">Refresh
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+          <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9"/>
+          <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"/>
+        </svg>
+   </button>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="js/bootstrap.bundle.min.js"></script>
+
+<!-- App Scripts -->
+<script src="java.js"></script>
+
+<script>
+async function loadDevices() {
+  try {
+    const res = await fetch("http://localhost:5000/api/devices");
+    const data = await res.json();
+    const tbody = document.getElementById("deviceTableBody");
+    tbody.innerHTML = "";
+    data.forEach((d, index) => {
+      const row = `<tr>
+        <td>${index+1}</td>
+        <td>${d.ip}</td>
+        <td>${d.mac}</td>
+        <td>${d.device_name}</td>
+        <td>${d.connection_time}</td>
+        <td>${d.energy}</td>
+        <td>${d.date}</td>
+      </tr>`;
+      tbody.innerHTML += row;
+    });
+  } catch(err) {
+    console.error("Error loading devices:", err);
+  }
+}
+
+async function loadEnergy() {
+  try {
+    const res = await fetch("http://localhost:5000/api/energy");
+    const data = await res.json();
+    const tbody = document.getElementById("energyTableBody");
+    tbody.innerHTML = "";
+    data.forEach(d => {
+      const row = `<tr>
+        <td>${d.total_energy}</td>
+        <td>${d.cost}</td>
+        <td>${d.co2}</td>
+        <td>${d.date}</td>
+      </tr>`;
+      tbody.innerHTML += row;
+    });
+  } catch(err) {
+    console.error("Error loading energy:", err);
+  }
+}
+
+
+async function updateDevicesTable(){
+    try{
+        const res = await fetch("/api/devices");
+        const data = await res.json();
+
+        const tbody = document.getElementById("deviceTableBody");
+        tbody.innerHTML = "";
+
+        if(!data || data.length === 0){
+            tbody.innerHTML = `<tr><td colspan="7" class="text-center text-muted">No data</td></tr>`;
+            return;
+        }
+
+        data.forEach((d, index) => {
+            const row = `<tr>
+                <td>${index+1}</td>
+                <td>${d.ip}</td>
+                <td>${d.mac}</td>
+                <td>${d.device_name}</td>
+                <td>${d.connection_time}</td>
+                <td>${d.energy}</td>
+                <td>${d.date}</td>
+            </tr>`;
+            tbody.innerHTML += row;
+        });
+    }catch(err){
+        console.error("Devices update error:", err);
+    }
+}
+
+async function updateEnergyTable(){
+    try{
+        const res = await fetch("/api/energy");
+        const data = await res.json();
+
+        const tbody = document.getElementById("energyTableBody");
+        tbody.innerHTML = "";
+
+        if(!data || data.length === 0){
+            tbody.innerHTML = `<tr><td colspan="4" class="text-center text-muted">No data</td></tr>`;
+            return;
+        }
+
+        data.forEach(d => {
+            const row = `<tr>
+                <td>${d.total_energy}</td>
+                <td>${d.cost}</td>
+                <td>${d.co2}</td>
+                <td>${d.date}</td>
+            </tr>`;
+            tbody.innerHTML += row;
+        });
+    }catch(err){
+        console.error("Energy update error:", err);
+    }
+}
+
+
+
+// Sayfa yüklendiğinde otomatik yükle
+window.addEventListener("load", () => {
+  loadDevices();
+  loadEnergy();
+  updateDevicesTable();
+  updateEnergyTable();
+});
+
+// Buton ile manuel yükleme
+document.getElementById("updateBtn").addEventListener("click", () => {
+  loadDevices();
+  loadEnergy();
+  updateDevicesTable();
+  updateEnergyTable();
+});
+
+setInterval(() => {
+    updateDevicesTable();
+    updateEnergyTable();
+}, 60000); // 60 saniye
+</script>
+
+
+</body>
+</html>
