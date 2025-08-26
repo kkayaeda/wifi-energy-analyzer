@@ -112,6 +112,11 @@
 <script src="java.js"></script>
 
 <script>
+// LocalStorage fallback key’leri
+const LS_DEVICES_KEY = "devicesData";
+const LS_ENERGY_KEY = "energyData";
+
+// ===== Devices & Energy yükleme fonksiyonları (orijinal) =====
 async function loadDevices() {
   try {
     const res = await fetch("http://localhost:5000/api/devices");
@@ -130,15 +135,84 @@ async function loadDevices() {
       </tr>`;
       tbody.innerHTML += row;
     });
+    // LocalStorage'a JSON olarak kaydet
+    localStorage.setItem(LS_DEVICES_KEY, JSON.stringify(data));
   } catch(err) {
-    console.error("Error loading devices:", err);
+    console.warn("API çalışmadı, LocalStorage'dan yükleniyor.", err);
+    const saved = localStorage.getItem(LS_DEVICES_KEY);
+    if(saved) renderDevicesFromJSON(saved);
   }
 }
 
 async function loadEnergy() {
   try {
     const res = await fetch("http://localhost:5000/api/energy");
-    const data = await res.json();
+    let data = await res.json();
+    // total_energy veya cost veya co2 tamamen 0 olan satırları at
+    data = data.filter(d => parseFloat(d.total_energy) !== 0 || parseFloat(d.cost) !== 0 || parseFloat(d.co2) !== 0);
+    const tbody = document.getElementById("energyTableBody");
+    tbody.innerHTML = "";
+    data.forEach(d => {
+      // Eğer tüm değerler 0 ise tabloya ekleme
+      if (Number(d.total_energy) === 0 && Number(d.cost) === 0 && Number(d.co2) === 0) return;
+      const row = `<tr>
+        <td>${d.total_energy}</td>
+        <td>${d.cost}</td>
+        <td>${d.co2}</td>
+        <td>${d.date}</td>
+      </tr>`;
+      tbody.innerHTML += row;
+    });
+    // LocalStorage'a JSON olarak kaydet
+    localStorage.setItem(LS_ENERGY_KEY, JSON.stringify(data));
+  } catch(err) {
+    console.warn("API çalışmadı, LocalStorage'dan yükleniyor.", err);
+    const saved = localStorage.getItem(LS_ENERGY_KEY);
+    if(saved) {
+      let data = JSON.parse(saved);
+      data = data.filter(d => parseFloat(d.total_energy) !== 0 || parseFloat(d.cost) !== 0 || parseFloat(d.co2) !== 0);
+
+      const tbody = document.getElementById("energyTableBody");
+      tbody.innerHTML = "";
+      data.forEach(d => {
+        const row = `<tr>
+          <td>${d.total_energy}</td>
+          <td>${d.cost}</td>
+          <td>${d.co2}</td>
+          <td>${d.date}</td>
+        </tr>`;
+        tbody.innerHTML += row;
+      });
+    }
+  }
+}
+
+// ===== LocalStorage render yardımcıları =====
+function renderDevicesFromJSON(jsonStr) {
+  try {
+    const data = JSON.parse(jsonStr);
+    const tbody = document.getElementById("deviceTableBody");
+    tbody.innerHTML = "";
+    data.forEach((d, index) => {
+      const row = `<tr>
+        <td>${index+1}</td>
+        <td>${d.ip}</td>
+        <td>${d.mac}</td>
+        <td>${d.device_name}</td>
+        <td>${d.connection_time}</td>
+        <td>${d.energy}</td>
+        <td>${d.date}</td>
+      </tr>`;
+      tbody.innerHTML += row;
+    });
+  } catch(e) {
+    console.error("Devices LocalStorage render error:", e);
+  }
+}
+
+function renderEnergyFromJSON(jsonStr) {
+  try {
+    const data = JSON.parse(jsonStr);
     const tbody = document.getElementById("energyTableBody");
     tbody.innerHTML = "";
     data.forEach(d => {
@@ -150,25 +224,22 @@ async function loadEnergy() {
       </tr>`;
       tbody.innerHTML += row;
     });
-  } catch(err) {
-    console.error("Error loading energy:", err);
+  } catch(e) {
+    console.error("Energy LocalStorage render error:", e);
   }
 }
 
-
+// ===== Update fonksiyonları (orijinal) =====
 async function updateDevicesTable(){
     try{
         const res = await fetch("/api/devices");
         const data = await res.json();
-
         const tbody = document.getElementById("deviceTableBody");
         tbody.innerHTML = "";
-
         if(!data || data.length === 0){
             tbody.innerHTML = `<tr><td colspan="7" class="text-center text-muted">No data</td></tr>`;
             return;
         }
-
         data.forEach((d, index) => {
             const row = `<tr>
                 <td>${index+1}</td>
@@ -181,25 +252,28 @@ async function updateDevicesTable(){
             </tr>`;
             tbody.innerHTML += row;
         });
+        localStorage.setItem(LS_DEVICES_KEY, JSON.stringify(data));
     }catch(err){
-        console.error("Devices update error:", err);
+        console.warn("Devices update error, LocalStorage fallback kullanılacak.", err);
+        const saved = localStorage.getItem(LS_DEVICES_KEY);
+        if(saved) renderDevicesFromJSON(saved);
     }
 }
 
 async function updateEnergyTable(){
     try{
         const res = await fetch("/api/energy");
-        const data = await res.json();
-
+        let data = await res.json();
+        data = data.filter(d => parseFloat(d.total_energy) !== 0 || parseFloat(d.cost) !== 0 || parseFloat(d.co2) !== 0);
         const tbody = document.getElementById("energyTableBody");
         tbody.innerHTML = "";
-
         if(!data || data.length === 0){
             tbody.innerHTML = `<tr><td colspan="4" class="text-center text-muted">No data</td></tr>`;
             return;
         }
-
         data.forEach(d => {
+            // Eğer tüm değerler 0 ise tabloya ekleme
+            if (Number(d.total_energy) === 0 && Number(d.cost) === 0 && Number(d.co2) === 0) return;
             const row = `<tr>
                 <td>${d.total_energy}</td>
                 <td>${d.cost}</td>
@@ -208,14 +282,30 @@ async function updateEnergyTable(){
             </tr>`;
             tbody.innerHTML += row;
         });
+        localStorage.setItem(LS_ENERGY_KEY, JSON.stringify(data));
     }catch(err){
-        console.error("Energy update error:", err);
+        console.warn("Energy update error, LocalStorage fallback kullanılacak.", err);
+        const saved = localStorage.getItem(LS_ENERGY_KEY);
+        if(saved) {
+          let data = JSON.parse(saved);
+          data = data.filter(d => parseFloat(d.total_energy) !== 0 || parseFloat(d.cost) !== 0 || parseFloat(d.co2) !== 0);
+
+          const tbody = document.getElementById("energyTableBody");
+          tbody.innerHTML = "";
+          data.forEach(d => {
+            const row = `<tr>
+              <td>${d.total_energy}</td>
+              <td>${d.cost}</td>
+              <td>${d.co2}</td>
+              <td>${d.date}</td>
+            </tr>`;
+            tbody.innerHTML += row;
+          });
+        }
     }
 }
 
-
-
-// Sayfa yüklendiğinde otomatik yükle
+// ===== Sayfa yüklendiğinde ve buton/interval ile çağırma (orijinal yapıyı bozmadan) =====
 window.addEventListener("load", () => {
   loadDevices();
   loadEnergy();
@@ -223,7 +313,6 @@ window.addEventListener("load", () => {
   updateEnergyTable();
 });
 
-// Buton ile manuel yükleme
 document.getElementById("updateBtn").addEventListener("click", () => {
   loadDevices();
   loadEnergy();
@@ -232,10 +321,12 @@ document.getElementById("updateBtn").addEventListener("click", () => {
 });
 
 setInterval(() => {
-    updateDevicesTable();
-    updateEnergyTable();
-}, 60000); // 60 saniye
+  updateDevicesTable();
+  updateEnergyTable();
+}, 60000);
 </script>
+
+
 
 
 </body>

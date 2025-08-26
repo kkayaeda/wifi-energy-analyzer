@@ -47,22 +47,27 @@ def upsert_devices(ip, mac, device_name, energy):
         row = cursor.fetchone()
 
         if row:
+            if isinstance(energy, str):
+                energy = float(energy.replace(" kWh", ""))
+
             # row: id, connection_time, energy, date
-            prev_time_str = row[3]
-            prev_time = datetime.strptime(prev_time_str, "%Y-%m-%d %H:%M:%S")
+            try:
+                prev_minutes = float(row[1].replace(" min", ""))  # connection_time
+            except:
+                prev_minutes = 0
 
-            # Varsayılan değerler
-            total_energy = energy  # yeni eklenen satır için energy
-            
-            # Geçen dakikayı hesapla
-            minutes_passed = int((now - prev_time).total_seconds())
-            total_seconds = minutes_passed
-            total_minutes = (total_seconds / 60)
+            try:
+                prev_energy = float(row[2])
+            except:
+                prev_energy = 0
 
-            if minutes_passed > 0:
-                prev_minutes = int(row[1].replace(" min", ""))
-                total_minutes = prev_minutes + minutes_passed
-                total_energy = row[2] + energy
+            # total_energy güncellemesi
+            total_energy = prev_energy + energy
+
+            # Burada eklenen süreyi belirle (örn: sensörden gelen süre veya 1 dakika)
+            added_minutes = 1  # istersen burayı gerçek sensör/süre ile değiştir
+            total_minutes = prev_minutes + added_minutes
+
 
             cursor.execute("""
                 UPDATE devices
@@ -74,7 +79,7 @@ def upsert_devices(ip, mac, device_name, energy):
             cursor.execute("""
                 INSERT INTO devices (ip, mac, device_name, connection_time, energy, date)
                 VALUES (?, ?, ?, ?, ?, ?)
-            """, (ip, mac, device_name, f"{minutes_passed} min", energy, datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+            """, (ip, mac, device_name, f"{total_minutes} min", float(energy), datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 
         conn.commit()
         print(f"Upserted: ip={ip}, mac={mac}, device_name={device_name}, connection_time={total_minutes}, energy={energy}")
