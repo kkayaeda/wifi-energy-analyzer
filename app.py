@@ -5,7 +5,7 @@ import re
 import socket
 import time
 from datetime import datetime
-from database import insert_energy, upsert_devices  # ✅ veritabanı fonksiyonu eklendi
+from database import insert_energy, upsert_devices 
 from chart import update_chart_data
 import sqlite3
 
@@ -23,9 +23,10 @@ except Exception as e:
 app = Flask(__name__)
 CORS(app)
 
+
 # Cihaz listesi cache
 devices_cache = []
-last_updated = None  # Son güncelleme zamanını tutacak
+last_updated = None  # Son güncelleme zamanı
 
 # Energy history (grafik için)
 energy_history = []
@@ -41,7 +42,7 @@ def get_wifi_ip_base():
             return match.group(1)
     except Exception as e:
         print("get_wifi_ip_base error:", e)
-    return "192.168.137"  # fallback
+    return "192.168.137" 
 
 def ping_sweep(base_ip):
     for i in range(1, 10):
@@ -201,13 +202,7 @@ def index():
                            device_count=len(devices_cache),
                            last_updated=last_updated)
 
-
-
-
-
-
 # Devices tablosundaki verileri çek (History için)
-
 DB_NAME = "database.db"
 
 @app.route("/api/devices", methods=["GET"])
@@ -254,10 +249,6 @@ def api_energy():
         return jsonify(energy)
     except Exception as e:
         return jsonify({"error": str(e)})
-
-
-
-
 
 
 if __name__ == "__main__":

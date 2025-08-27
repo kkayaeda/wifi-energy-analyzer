@@ -1,4 +1,3 @@
-# database.py
 import sqlite3
 from datetime import datetime
 
@@ -32,10 +31,6 @@ def insert_energy(total_energy, cost, co2):
 
 
 def upsert_devices(ip, mac, device_name, energy):
-    """
-    Var olan 'devices' tablosuna yeni satır ekler veya günceller.
-    Tablo sütunları: ip, mac, device_name, connection_time, energy, date
-    """
     try:
         conn = sqlite3.connect(DB_NAME)
         cursor = conn.cursor()
@@ -49,10 +44,8 @@ def upsert_devices(ip, mac, device_name, energy):
         if row:
             if isinstance(energy, str):
                 energy = float(energy.replace(" kWh", ""))
-
-            # row: id, connection_time, energy, date
             try:
-                prev_minutes = int(row[1].replace(" min", ""))  # connection_time
+                prev_minutes = int(row[1].replace(" min", "")) 
             except:
                 prev_minutes = 0
 
@@ -64,10 +57,8 @@ def upsert_devices(ip, mac, device_name, energy):
             # total_energy güncellemesi
             total_energy = round(prev_energy + energy, 4)
 
-            # Burada eklenen süreyi belirle (örn: sensörden gelen süre veya 1 dakika)
-            added_minutes = 1  # istersen burayı gerçek sensör/süre ile değiştir
+            added_minutes = 1 
             total_minutes = prev_minutes + added_minutes
-
 
             cursor.execute("""
                 UPDATE devices

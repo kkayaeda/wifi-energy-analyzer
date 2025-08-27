@@ -1,6 +1,6 @@
 from datetime import datetime
 
-# Örnek veri tutucu (sürekli güncellenen)
+# veri tutucu (sürekli güncellenen)
 labels = []
 energy_values = []
 cost_values = []
