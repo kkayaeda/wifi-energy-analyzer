@@ -52,7 +52,7 @@ def upsert_devices(ip, mac, device_name, energy):
 
             # row: id, connection_time, energy, date
             try:
-                prev_minutes = float(row[1].replace(" min", ""))  # connection_time
+                prev_minutes = int(row[1].replace(" min", ""))  # connection_time
             except:
                 prev_minutes = 0
 
@@ -62,7 +62,7 @@ def upsert_devices(ip, mac, device_name, energy):
                 prev_energy = 0
 
             # total_energy güncellemesi
-            total_energy = prev_energy + energy
+            total_energy = round(prev_energy + energy, 4)
 
             # Burada eklenen süreyi belirle (örn: sensörden gelen süre veya 1 dakika)
             added_minutes = 1  # istersen burayı gerçek sensör/süre ile değiştir

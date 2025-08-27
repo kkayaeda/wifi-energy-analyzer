@@ -133,7 +133,7 @@ async function loadDevices() {
         <td>${d.energy}</td>
         <td>${d.date}</td>
       </tr>`;
-      tbody.innerHTML += row;
+      tbody.innerHTML = row + tbody.innerHTML;
     });
     // LocalStorage'a JSON olarak kaydet
     localStorage.setItem(LS_DEVICES_KEY, JSON.stringify(data));
@@ -161,7 +161,7 @@ async function loadEnergy() {
         <td>${d.co2}</td>
         <td>${d.date}</td>
       </tr>`;
-      tbody.innerHTML += row;
+      tbody.innerHTML = row + tbody.innerHTML;
     });
     // LocalStorage'a JSON olarak kaydet
     localStorage.setItem(LS_ENERGY_KEY, JSON.stringify(data));
@@ -181,7 +181,7 @@ async function loadEnergy() {
           <td>${d.co2}</td>
           <td>${d.date}</td>
         </tr>`;
-        tbody.innerHTML += row;
+        tbody.innerHTML = row + tbody.innerHTML;
       });
     }
   }
@@ -203,7 +203,7 @@ function renderDevicesFromJSON(jsonStr) {
         <td>${d.energy}</td>
         <td>${d.date}</td>
       </tr>`;
-      tbody.innerHTML += row;
+      tbody.innerHTML = row + tbody.innerHTML;
     });
   } catch(e) {
     console.error("Devices LocalStorage render error:", e);
@@ -222,7 +222,7 @@ function renderEnergyFromJSON(jsonStr) {
         <td>${d.co2}</td>
         <td>${d.date}</td>
       </tr>`;
-      tbody.innerHTML += row;
+      tbody.innerHTML = row + tbody.innerHTML;
     });
   } catch(e) {
     console.error("Energy LocalStorage render error:", e);
@@ -250,7 +250,7 @@ async function updateDevicesTable(){
                 <td>${d.energy}</td>
                 <td>${d.date}</td>
             </tr>`;
-            tbody.innerHTML += row;
+            tbody.innerHTML = row + tbody.innerHTML;
         });
         localStorage.setItem(LS_DEVICES_KEY, JSON.stringify(data));
     }catch(err){
@@ -299,7 +299,7 @@ async function updateEnergyTable(){
               <td>${d.co2}</td>
               <td>${d.date}</td>
             </tr>`;
-            tbody.innerHTML += row;
+            tbody.innerHTML = row + tbody.innerHTML;
           });
         }
     }
