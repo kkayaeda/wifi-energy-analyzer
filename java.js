@@ -29,11 +29,14 @@ document.addEventListener("DOMContentLoaded", function() {
         setIcon(makeDark);
 
         // Chart renklerini dark/light moda göre ayarla
-        if (energyChart) {
-            energyChart.options.plugins.legend.labels.color = makeDark ? '#f1f1f1' : '#212529';
-            energyChart.options.scales.x.ticks.color = makeDark ? '#f1f1f1' : '#212529';
-            energyChart.options.scales.y.ticks.color = makeDark ? '#f1f1f1' : '#212529';
-            energyChart.update();
+        if (window.energyChart) {
+            const color = makeDark ? '#f1f1f1' : '#212529';
+            window.energyChart.options.plugins.legend.labels.color = color;
+            window.energyChart.options.scales.x.title.color = color;
+            window.energyChart.options.scales.x.ticks.color = color;
+            window.energyChart.options.scales.y.title.color = color;
+            window.energyChart.options.scales.y.ticks.color = color;
+            window.energyChart.update();
         }
     });
 });
@@ -130,50 +133,76 @@ async function startScan(){
   }
 }
 
+document.getElementById('downloadBtn')?.addEventListener('click', async () => {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF('p', 'pt', 'a4');
+
+  const table = document.getElementById('myTable');
+  if(!table) return;
+  const canvas = await html2canvas(table, { scale: 2 });
+  const imgData = canvas.toDataURL('image/png');
+
+  const imgProps = doc.getImageProperties(imgData);
+  const pdfWidth = doc.internal.pageSize.getWidth();
+  const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+  doc.addImage(imgData, 'PNG', 0, 20, pdfWidth, pdfHeight);
+  doc.save('table.pdf');
+});
+
 // =====================
 // Chart.js Energy Chart
 // =====================
-const ctx = document.getElementById('energyChart')?.getContext('2d');
+document.addEventListener("DOMContentLoaded", async () => {
+    const ctx = document.getElementById('energyChart')?.getContext('2d');
+    if(!ctx) return;
 
-const energyChart = ctx ? new Chart(ctx, {
-    type:'line',
-    data:{
-        labels:[],
-        datasets:[
-            {label:'Total Energy (kWh)', data:[], borderColor:'rgba(75,192,192,1)', backgroundColor:'rgba(75,192,192,0.2)', tension:0.3, fill:true},
-            {label:'Cost (₺)', data:[], borderColor:'rgba(255,99,132,1)', backgroundColor:'rgba(255,99,132,0.2)', tension:0.3, fill:true},
-            {label:'CO2 Emissions (kg)', data:[], borderColor:'rgba(255,206,86,1)', backgroundColor:'rgba(255,206,86,0.2)', tension:0.3, fill:true}
-        ]
-    },
-    options:{
-        responsive:false,
-        maintainAspectRatio:false,
-        plugins:{legend:{position:'top', labels:{color:'#212529'}}, tooltip:{mode:'index', intersect:false}},
-        scales:{
-            x:{title:{display:true, text:'Time (min)'}, ticks:{color:'#212529'}},
-            y:{title:{display:true, text:'Value'}, beginAtZero:true, ticks:{color:'#212529'}}
+    window.energyChart = new Chart(ctx, {
+        type:'line',
+        data:{
+            labels:[],
+            datasets:[
+                {label:'Total Energy (kWh)', data:[], borderColor:'rgba(75,192,192,1)', backgroundColor:'rgba(75,192,192,0.2)', tension:0.3, fill:true},
+                {label:'Cost (₺)', data:[], borderColor:'rgba(255,99,132,1)', backgroundColor:'rgba(255,99,132,0.2)', tension:0.3, fill:true},
+                {label:'CO2 Emissions (kg)', data:[], borderColor:'rgba(255,206,86,1)', backgroundColor:'rgba(255,206,86,0.2)', tension:0.3, fill:true}
+            ]
+        },
+        options:{
+            responsive:false,
+            maintainAspectRatio:false,
+            plugins:{legend:{position:'top', labels:{color:'#212529'}}, tooltip:{mode:'index', intersect:false}},
+            scales:{
+                x:{title:{display:true, text:'Time (min)', color:'#212529'}, ticks:{color:'#212529'}},
+                y:{title:{display:true, text:'Value', color:'#212529'}, beginAtZero:true, ticks:{color:'#212529'}}
+            }
+        }
+    });
+
+    async function updateEnergyChart(){
+        try{
+            const res = await fetch(`${API_BASE}/energy_data`);
+            const data = await res.json();
+
+            window.energyChart.data.labels = data.labels||[];
+            window.energyChart.data.datasets[0].data = data.energy||[];
+            window.energyChart.data.datasets[1].data = data.cost||[];
+            window.energyChart.data.datasets[2].data = data.co2||[];
+            window.energyChart.update();
+        } catch(err){
+            console.error('Chart update error:', err);
         }
     }
-}) : null;
 
-async function updateEnergyChart(){
-    if(!energyChart) return;
-    try{
-        const res = await fetch(`${API_BASE}/energy_data`);
-        const data = await res.json();
 
-        energyChart.data.labels = data.labels||[];
-        energyChart.data.datasets[0].data = data.energy||[];
-        energyChart.data.datasets[1].data = data.cost||[];
-        energyChart.data.datasets[2].data = data.co2||[];
-        energyChart.update();
-    } catch(err){
-        console.error('Chart update error:', err);
-    }
-}
+    updateEnergyChart();
+    setInterval(updateEnergyChart, 60000);
+});
 
-// İlk yükleme
-updateEnergyChart();
+const shareBtn = document.getElementById('shareBtn');
+shareBtn.addEventListener('click', () => {
+  shareBtn.classList.toggle('active');
+});
+
 
 // =====================
 // Intervals & Event Listeners
@@ -183,4 +212,3 @@ if(refreshBtn) refreshBtn.addEventListener('click', fetchDevices);
 
 setInterval(fetchDevices, 10000);
 setInterval(startScan, 30000);
-setInterval(updateEnergyChart, 60000);

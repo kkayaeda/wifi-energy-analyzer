@@ -8,9 +8,11 @@
   <!-- Bootstrap CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet" />
   <link href="style.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
+  <div class="flex-grow-1">
 <!-- Navbar -->
 <nav class="navbar sticky-top bg-body-tertiary shadow">
   <div class="container-fluid d-flex justify-content-between align-items-center">
@@ -50,15 +52,39 @@
   </div>
 </nav>
 
+<div class="fixed-buttons">
+<button id="shareBtn" class="button" title="Share">
+  <img src="images/share.svg" height="20" alt="Share"/>
+  <ul>
+    <li>
+      <a href="https://www.linkedin.com/in/cemile-eda-kaya-1505e/" target="_blank">
+        <img src="images/linkedin-logo.svg" height="30" alt="LinkedIn"/>
+      </a>
+    </li>
+    <li>
+      <a href="https://github.com/kkayaeda/wifi-energy-analyzer" target="_blank">
+        <img src="images/Github-logo.svg" height="38" alt="GitHub"/>
+      </a>
+    </li>
+    <li>
+      <a href="mailto: edakaya.1505@gmail.com" target="_blank">
+        <img src="images/gmail-icon-seeklogo.svg" height="35" alt="Instagram"/>
+      </a>
+    </li>
+  </ul>
+</button>
+<a href="#" class="top">&#8593;</a>
+</div>
+
 <div class="container py-4">
   <!-- Buttons -->
   <div class="mb-3 d-flex justify-content-between align-items-center">
     <div>
-      <button type="button" class="btn btn-success" id="scanBtn">Scan Devices 
+      <button type="button" class="scan-button" id="scanBtn">Scan Devices 
         <img src="images/scan-icon-2.png" class="ms-1" height="20" alt="Energy Logo" loading="lazy"/>
       </button>
       &nbsp;
-      <button type="button" class="btn btn-outline-danger" id="refreshBtn">Refresh
+      <button type="button" class="refresh-button" id="refreshBtn">Refresh
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
           <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9"/>
           <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"/>
@@ -108,10 +134,59 @@
   </div>
 
   <!-- Status -->
-  <div class="mt-2">
+  <div class="mt-2 mb-5">
     <span class="badge badge-light" id="status">Ready</span>
   </div>
 </div>
+</div>
+
+<footer class="footer-95942 mt-5">
+  <div class="container">
+    <div class="row justify-items-start">
+      <div class="col-md-4 d-flex align-items-start">
+        <img src="images/logo.png" alt="Logo" height="60" class="me-3">
+        <p>
+          Wi-Fi Energy Analyzer is a tool that allows users to view the energy consumption of the devices connected to Wi-Fi.
+        </p>
+      </div>
+      <div class="col-md-8 d-flex flex-column align-items-end">
+        <div class="row">
+          <div class="col-sm-6 col-md mb-4 mb-md-0">
+            <h4>&nbsp;Menu</h4>
+              <ul class="list-unstyled nav-links d-flex mb-3">
+              <li class="nav-item"><a href="index.html"class="nav-link px-2 text-body-secondary">Wi-Fi Energy Analyzer</a></li>
+              <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Energy Chart</a></li>
+              <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">History</a></li>
+              <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
+              <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row py-3">
+      <div class="col-md-12 pb-3">
+        <div class="border-top">
+        </div>
+      </div>
+    </div>
+    <div class="row align-items-center">
+      <div class="col-md-4">
+        <ul class="list-unstyled social mb-0 pb-0 nav-left">
+        </ul>
+      </div>
+      <div class="col-md-4 text-center">
+        <span class="small">2025</span>
+      </div>
+      <div class="col-md-4 text-right">
+        <ul class="list-unstyled social app mb-0 pb-0 nav-right">
+          <li><a href="https://www.linkedin.com/in/cemile-eda-kaya-1505e/"><span class="icon-apple mr-3"></span>LinkedIn</a></li>
+          <li><a href="https://github.com/kkayaeda/wifi-energy-analyzer"><span class="icon-play mr-2"></span>GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
 
 <!-- Bootstrap JS -->
 <script src="js/bootstrap.bundle.min.js"></script>

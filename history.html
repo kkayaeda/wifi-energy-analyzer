@@ -8,6 +8,7 @@
   <!-- Bootstrap CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet" />
   <link href="style.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -50,11 +51,56 @@
   </div>
 </nav>
 
-<div class="container py-4">
+<div class="container py-4 align-items-end">
+  <div class="d-flex justify-content-end mt-3">
+    <button class="refresh-history-button" id="updateBtn">
+      Refresh
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+        <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9"/>
+        <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"/>
+      </svg>
+    </button>
+    &nbsp;
+    <!-- From Uiverse.io by vinodjangid07 --> 
+    <button id="downloadBtn" class="Btn align-items-center mt-1">
+     <svg class="svgIcon" viewBox="0 0 384 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"></path></svg>
+       <span class="icon2"></span>
+     <span class="tooltip">Download</span>
+    </button>
+  </div>
+
+<div class="fixed-buttons">
+<button id="shareBtn" class="button" title="Share">
+  <img src="images/share.svg" height="20" alt="Share"/>
+  <ul>
+    <li>
+      <a href="https://www.linkedin.com/in/cemile-eda-kaya-1505e/" target="_blank">
+        <img src="images/linkedin-logo.svg" height="30" alt="LinkedIn"/>
+      </a>
+    </li>
+    <li>
+      <a href="https://github.com/kkayaeda/wifi-energy-analyzer" target="_blank">
+        <img src="images/Github-logo.svg" height="38" alt="GitHub"/>
+      </a>
+    </li>
+    <li>
+      <a href="mailto: edakaya.1505@gmail.com" target="_blank">
+        <img src="images/gmail-icon-seeklogo.svg" height="35" alt="Instagram"/>
+      </a>
+    </li>
+  </ul>
+</button>
+<a href="#" class="top">&#8593;</a>
+</div>
+
   <!-- Devices Table -->
-  <p class="text-end text-center">Devices</p>
+  <div class="container py-4">
+  <main class="flex-grow-1 d-flex flex-column justify-content-center align-items-center py-4 mb-2">
+    <p class="text-end text-center">Devices</p>
+  </main>
+  </div>
   <div class="table-responsive">
-    <table class="table table-bordered table-hover table-rounded" style="border:1px solid #363636; border-radius:1rem; overflow:hidden;">
+    <table class="table table-bordered table-hover table-rounded" style="border:1px solid #363636; border-radius:1rem; overflow:hidden;" id="deviceTable">
       <thead>
         <tr>
           <th>#</th>
@@ -70,11 +116,14 @@
         <tr><td colspan="7" class="text-center text-muted">No data yet</td></tr>
       </tbody>
     </table>
-    
 
     <!-- Energy Table -->
-    <p class="text-end text-center">Energy</p>
-    <table class="table table-bordered table-hover table-rounded" style="border:1px solid #363636; border-radius:1rem; overflow:hidden;">
+    <div class="container py-4">
+    <main class="flex-grow-1 d-flex flex-column justify-content-center align-items-center py-4 mb-2">
+      <p class="text-end text-center">Energy</p>
+    </main>
+    </div>
+    <table class="table table-bordered table-hover table-rounded" style="border:1px solid #363636; border-radius:1rem; overflow:hidden;" id="energyTable">
       <thead>
         <tr>
           <th>Total Energy (kWh)</th>
@@ -88,19 +137,145 @@
       </tbody>
     </table>
   </div>
-  <button type="button" class="btn btn-outline-danger" id="updateBtn">Refresh
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
-          <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9"/>
-          <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"/>
-        </svg>
-   </button>
 </div>
+
+<footer class="footer-95942 mt-5">
+  <div class="container">
+    <div class="row justify-items-start">
+      <div class="col-md-4 d-flex align-items-start">
+        <img src="images/logo.png" alt="Logo" height="60" class="me-3">
+        <p>
+          Wi-Fi Energy Analyzer is a tool that allows users to view the energy consumption of the devices connected to Wi-Fi.
+        </p>
+      </div>
+      <div class="col-md-8 d-flex flex-column align-items-end">
+        <div class="row">
+          <div class="col-sm-6 col-md mb-4 mb-md-0">
+            <h4>&nbsp;Menu</h4>
+              <ul class="list-unstyled nav-links d-flex mb-3">
+              <li class="nav-item"><a href="index.html"class="nav-link px-2 text-body-secondary">Wi-Fi Energy Analyzer</a></li>
+              <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Energy Chart</a></li>
+              <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">History</a></li>
+              <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
+              <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row py-3">
+      <div class="col-md-12 pb-3">
+        <div class="border-top">
+        </div>
+      </div>
+    </div>
+    <div class="row align-items-center">
+      <div class="col-md-4">
+        <ul class="list-unstyled social mb-0 pb-0 nav-left">
+        </ul>
+      </div>
+      <div class="col-md-4 text-center">
+        <span class="small">2025</span>
+      </div>
+      <div class="col-md-4 text-right">
+        <ul class="list-unstyled social app mb-0 pb-0 nav-right">
+          <li><a href="https://www.linkedin.com/in/cemile-eda-kaya-1505e/"><span class="icon-apple mr-3"></span>LinkedIn</a></li>
+          <li><a href="https://github.com/kkayaeda/wifi-energy-analyzer"><span class="icon-play mr-2"></span>GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
 
 <!-- Bootstrap JS -->
 <script src="js/bootstrap.bundle.min.js"></script>
 
 <!-- App Scripts -->
 <script src="java.js"></script>
+<!-- jsPDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<!-- html2canvas -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<!-- jsPDF + autoTable CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
+<script>
+document.getElementById('downloadBtn').addEventListener('click', async () => {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF('p', 'pt', 'a4');
+
+  // --- DEVICE TABLE ---
+  const deviceTable = document.getElementById('deviceTable');
+  const deviceRows = Array.from(deviceTable.querySelectorAll('tbody tr')).map(tr =>
+    Array.from(tr.querySelectorAll('td')).map(td => td.innerText)
+  );
+
+  doc.autoTable({
+    head: [['#', 'IP', 'MAC', 'Device Name', 'Connection Time', 'Energy (kWh)', 'Date']],
+    body: deviceRows,
+    startY: 20,
+    theme: 'grid',
+    headStyles: {
+      fillColor: [20, 90, 50],
+      textColor: [255, 255, 255],
+      fontStyle: 'bold',
+      halign: 'center',
+      valign: 'middle'
+    },
+    bodyStyles: {
+      halign: 'center',
+      valign: 'middle',
+      fontSize: 9 // Daha kompakt
+    },
+    styles: {
+      cellPadding: 4 // Daha sıkışık
+    }
+  });
+
+  // --- ENERGY TABLE ---
+  const energyTable = document.getElementById('energyTable');
+  const energyRows = Array.from(energyTable.querySelectorAll('tbody tr')).map(tr =>
+    Array.from(tr.querySelectorAll('td')).map(td => td.innerText)
+  );
+
+  let finalY = doc.lastAutoTable ? doc.lastAutoTable.finalY + 20 : 20;
+
+  doc.autoTable({
+    head: [['Total Energy (kWh)', 'Cost (TL)', 'Carbon Emission (kg CO2)', 'Date']],
+    body: energyRows,
+    startY: finalY,
+    theme: 'grid',
+    headStyles: {
+      fillColor: [20, 90, 50],
+      textColor: [255, 255, 255],
+      fontStyle: 'bold',
+      halign: 'center',
+      valign: 'middle'
+    },
+    bodyStyles: {
+      halign: 'center',
+      valign: 'middle',
+      fontSize: 9 // Daha kompakt
+    },
+    styles: {
+      cellPadding: 4 // Daha sıkışık
+    },
+    columnStyles: {
+      1: { cellWidth: 'auto' },
+      2: { cellWidth: 'auto' },
+      3: { cellWidth: 'auto' } // Carbon Emission için optimize
+    }
+  });
+
+  doc.save('history.pdf');
+});
+
+</script>
+
+
+
 
 <script>
 // LocalStorage fallback key’leri

@@ -10,59 +10,167 @@
   <!-- Bootstrap CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet" />
   <link href="style.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-    <div class="vr mx-3 d-none d-md-block"></div>
-
-
   <!-- Navbar -->
-<nav class="navbar sticky-top bg-body-tertiary shadow">
-  <div class="container-fluid d-flex justify-content-between align-items-center">
-    
-    <!-- Sol: Logo + Menü -->
-    <div class="d-flex align-items-center">
-      <a href="index.html"> 
-        <img src="images/logo.png" class="me-2" height="60" alt="Energy Logo" loading="lazy" style="color: #1f1f1f !important;"/>
-      </a>
-      <a class="navbar-brand" href="index.html">Wi-Fi Energy Analyzer</a>
-      <ul class="navbar-nav d-flex flex-row align-items-center ms-3">
-        <li class="nav-item">
-          <a class="nav-link active" href="energy-chart.html">Energy Chart</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="history.html">History</a>
-        </li>
-        <li class="nav-item me-3">
-          <a class="nav-link" href="about.html">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="contact.html">Contact</a>
-        </li>
-      </ul>
-    </div>
-
-    <!-- Sağ: Dark Mode -->
-    <div class="d-flex align-items-center">
-      <div class="form-check form-switch me-3" id="darkModeToggle">
-        <input class="form-check-input" type="checkbox" id="darkModeSwitch">
-        <label class="form-check-label" for="darkModeSwitch">
-          <span id="toggleIcon"></span>
-        </label>
+  <nav class="navbar sticky-top bg-body-tertiary shadow">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+      <div class="d-flex align-items-center">
+        <a href="index.html">
+          <img src="images/logo.png" class="me-2" height="60" alt="Energy Logo" loading="lazy" style="color: #1f1f1f !important;"/>
+        </a>
+        <a class="navbar-brand" href="index.html">Wi-Fi Energy Analyzer</a>
+        <ul class="navbar-nav d-flex flex-row align-items-center ms-3">
+          <li class="nav-item"><a class="nav-link active" href="energy-chart.html">Energy Chart</a></li>
+          <li class="nav-item"><a class="nav-link" href="history.html">History</a></li>
+          <li class="nav-item me-3"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        </ul>
       </div>
-      <div class="vr mx-3 d-none d-md-block"></div>
+
+      <!-- Sağ: Dark Mode -->
+      <div class="d-flex align-items-center">
+        <div class="form-check form-switch me-3" id="darkModeToggle">
+          <input class="form-check-input" type="checkbox" id="darkModeSwitch">
+          <label class="form-check-label" for="darkModeSwitch"><span id="toggleIcon"></span></label>
+        </div>
+        <div class="vr mx-3 d-none d-md-block"></div>
+      </div>
+    </div>
+  </nav>
+
+<div class="fixed-buttons">
+<button id="shareBtn" class="button" title="Share">
+  <img src="images/share.svg" height="20" alt="Share"/>
+  <ul>
+    <li>
+      <a href="https://www.linkedin.com/in/cemile-eda-kaya-1505e/" target="_blank">
+        <img src="images/linkedin-logo.svg" height="30" alt="LinkedIn"/>
+      </a>
+    </li>
+    <li>
+      <a href="https://github.com/kkayaeda/wifi-energy-analyzer" target="_blank">
+        <img src="images/Github-logo.svg" height="38" alt="GitHub"/>
+      </a>
+    </li>
+    <li>
+      <a href="mailto: edakaya.1505@gmail.com" target="_blank">
+        <img src="images/gmail-icon-seeklogo.svg" height="35" alt="Instagram"/>
+      </a>
+    </li>
+  </ul>
+</button>
+<a href="#" class="top">&#8593;</a>
+</div>
+  <div class="container py-4">
+    <main class="flex-grow-1 d-flex flex-column justify-content-center align-items-center py-4 mb-5">
+      <p class="text-end text-center">Multiple Line Energy Chart</p>
+      <canvas id="energyChart" width="1200" height="600"></canvas>
+    </main>
+  </div>
+
+ <footer class="footer-95942 mt-5">
+  <div class="container">
+    <div class="row justify-items-start">
+      <div class="col-md-4 d-flex align-items-start">
+        <img src="images/logo.png" alt="Logo" height="60" class="me-3">
+        <p>
+          Wi-Fi Energy Analyzer is a tool that allows users to view the energy consumption of the devices connected to Wi-Fi.
+        </p>
+      </div>
+      <div class="col-md-8 d-flex flex-column align-items-end">
+        <div class="row">
+          <div class="col-sm-6 col-md mb-4 mb-md-0">
+            <h4>&nbsp;Menu</h4>
+              <ul class="list-unstyled nav-links d-flex mb-3">
+              <li class="nav-item"><a href="index.html"class="nav-link px-2 text-body-secondary">Wi-Fi Energy Analyzer</a></li>
+              <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Energy Chart</a></li>
+              <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">History</a></li>
+              <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
+              <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row py-3">
+      <div class="col-md-12 pb-3">
+        <div class="border-top">
+        </div>
+      </div>
+    </div>
+    <div class="row align-items-center">
+      <div class="col-md-4">
+        <ul class="list-unstyled social mb-0 pb-0 nav-left">
+        </ul>
+      </div>
+      <div class="col-md-4 text-center">
+        <span class="small">2025</span>
+      </div>
+      <div class="col-md-4 text-right">
+        <ul class="list-unstyled social app mb-0 pb-0 nav-right">
+          <li><a href="https://www.linkedin.com/in/cemile-eda-kaya-1505e/"><span class="icon-apple mr-3"></span>LinkedIn</a></li>
+          <li><a href="https://github.com/kkayaeda/wifi-energy-analyzer"><span class="icon-play mr-2"></span>GitHub</a></li>
+        </ul>
+      </div>
     </div>
   </div>
-</nav>
-
-<canvas id="energyChart" width="1200" height="600"></canvas>
-
+</footer>
 
   <!-- Bootstrap JS -->
   <script src="js/bootstrap.bundle.min.js"></script>
   <!-- App Scripts -->
   <script src="java.js"></script>
+
+  <!-- Chart.js kodunu DOMContentLoaded ile sarmala -->
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+      const ctx = document.getElementById('energyChart')?.getContext('2d');
+
+      const energyChart = ctx ? new Chart(ctx, {
+          type:'line',
+          data:{
+              labels:[],
+              datasets:[
+                  {label:'Total Energy (kWh)', data:[], borderColor:'rgba(75,192,192,1)', backgroundColor:'rgba(75,192,192,0.2)', tension:0.3, fill:true},
+                  {label:'Cost (₺)', data:[], borderColor:'rgba(255,99,132,1)', backgroundColor:'rgba(255,99,132,0.2)', tension:0.3, fill:true},
+                  {label:'CO2 Emissions (kg)', data:[], borderColor:'rgba(255,206,86,1)', backgroundColor:'rgba(255,206,86,0.2)', tension:0.3, fill:true}
+              ]
+          },
+          options:{
+              responsive:false,
+              maintainAspectRatio:false,
+              plugins:{legend:{position:'top', labels:{color:'#212529'}}, tooltip:{mode:'index', intersect:false}},
+              scales:{
+                  x:{title:{display:true, text:'Time (min)'}, ticks:{color:'#212529'}},
+                  y:{title:{display:true, text:'Value'}, beginAtZero:true, ticks:{color:'#212529'}}
+              }
+          }
+      }) : null;
+
+      async function updateEnergyChart(){
+          if(!energyChart) return;
+          try{
+              const res = await fetch(`${API_BASE}/energy_data`);
+              const data = await res.json();
+
+              energyChart.data.labels = data.labels||[];
+              energyChart.data.datasets[0].data = data.energy||[];
+              energyChart.data.datasets[1].data = data.cost||[];
+              energyChart.data.datasets[2].data = data.co2||[];
+              energyChart.update();
+          } catch(err){
+              console.error('Chart update error:', err);
+          }
+      }
+
+      // İlk yükleme
+      updateEnergyChart();
+  });
+  </script>
 
 </body>
 </html>
