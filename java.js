@@ -150,12 +150,14 @@ document.getElementById('downloadBtn')?.addEventListener('click', async () => {
   doc.save('table.pdf');
 });
 
-// =====================
 // Chart.js Energy Chart
-// =====================
 document.addEventListener("DOMContentLoaded", async () => {
     const ctx = document.getElementById('energyChart')?.getContext('2d');
     if(!ctx) return;
+
+    // Sayfa açılırken dark mod durumunu al
+    const isDarkMode = localStorage.getItem("darkMode") === "enabled";
+    const textColor = isDarkMode ? '#f1f1f1' : '#212529';
 
     window.energyChart = new Chart(ctx, {
         type:'line',
@@ -170,10 +172,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         options:{
             responsive:false,
             maintainAspectRatio:false,
-            plugins:{legend:{position:'top', labels:{color:'#212529'}}, tooltip:{mode:'index', intersect:false}},
+            plugins:{legend:{position:'top', labels:{color:textColor}}, tooltip:{mode:'index', intersect:false}},
             scales:{
-                x:{title:{display:true, text:'Time (min)', color:'#212529'}, ticks:{color:'#212529'}},
-                y:{title:{display:true, text:'Value', color:'#212529'}, beginAtZero:true, ticks:{color:'#212529'}}
+                x:{title:{display:true, text:'Time (min)', color:textColor}, ticks:{color:textColor}},
+                y:{title:{display:true, text:'Value', color:textColor}, beginAtZero:true, ticks:{color:textColor}}
             }
         }
     });
@@ -193,10 +195,25 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
+    // Dark mode toggle event’i
+    const darkToggle = document.getElementById("darkModeToggle");
+    darkToggle?.addEventListener("click", () => {
+        if(!window.energyChart) return;
+        const darkNow = document.body.classList.contains("dark-mode");
+        const newColor = darkNow ? '#f1f1f1' : '#212529';
+
+        window.energyChart.options.plugins.legend.labels.color = newColor;
+        window.energyChart.options.scales.x.ticks.color = newColor;
+        window.energyChart.options.scales.x.title.color = newColor;
+        window.energyChart.options.scales.y.ticks.color = newColor;
+        window.energyChart.options.scales.y.title.color = newColor;
+        window.energyChart.update();
+    });
 
     updateEnergyChart();
     setInterval(updateEnergyChart, 60000);
 });
+
 
 const shareBtn = document.getElementById('shareBtn');
 shareBtn.addEventListener('click', () => {

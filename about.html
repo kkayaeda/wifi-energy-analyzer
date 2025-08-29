@@ -53,7 +53,8 @@
 
 <div class="fixed-buttons">
 <button id="shareBtn" class="button" title="Share">
-  <img src="images/share.svg" height="20" alt="Share"/>
+  <img src="images/share-dark-mode.png" class="share-icon light" height="30" alt="Share (light)"/>
+  <img src="images/share.svg" class="share-icon dark" height="20" alt="Share (dark)"/>
   <ul>
     <li>
       <a href="https://www.linkedin.com/in/cemile-eda-kaya-1505e/" target="_blank">
@@ -67,7 +68,7 @@
     </li>
     <li>
       <a href="mailto: edakaya.1505@gmail.com" target="_blank">
-        <img src="images/gmail-icon-seeklogo.svg" height="35" alt="Instagram"/>
+        <img src="images/gmail-icon-seeklogo.svg" height="35" alt="Mail"/>
       </a>
     </li>
   </ul>
@@ -82,7 +83,7 @@
     <div class="col-md-4 text-center text-md-start mb-3 mb-md-0">
       <img
       src="images/logo.png"
-        height="240"
+        height="260"
         alt="Energy Logo"
         loading="lazy"
         class="img-fluid"
@@ -98,9 +99,13 @@
         <br><br>
         The tables automatically scan every 30 seconds and refresh every 10 seconds. The toggle switch allows users to switch between dark mode and light mode.
         <br><br>
-        It uses <b>Python</b> and <b>Flask</b> for the backend to scan devices and 
+        The energy chart allows for a more visual representation of the data.
+        <br><br>
+        It uses <b>Python</b>, <b>Flask</b> and <b>JavaScript</b> for the backend to scan devices and 
         refresh the data, while <b>HTML</b>, <b>CSS</b>, and <b>Bootstrap</b> 
         handle the design and layout of the website.
+        <br><br>
+        In the history page, you can view all energy data saved on your computer, the website also allows you to save the tables as PDF.
         <br><br>
         The full source code and project details can be found on my <a href="https://github.com/kkayaeda/wifi-energy-analyzer" target="_blank">
         GitHub repository
@@ -114,15 +119,6 @@
 <div class="container py-5">
   <h5 class="text-center mb-4">Technologies Used</h5>
   <div class="row justify-content-center align-items-center">
-
-    <div class="col-4 col-md-2 text-center mb-3">
-      <img src="images/Python-logo-notext.svg.png" alt="Python" class="tech-logo">
-    </div>
-
-    <div class="col-4 col-md-2 text-center mb-3">
-      <img src="images/flask-logo.png" alt="Flask" class="tech-logo">
-    </div>
-
     <div class="col-4 col-md-2 text-center mb-3">
       <img src="images/HTML5_logo_and_wordmark.svg.png" alt="HTML" class="tech-logo">
     </div>
@@ -135,6 +131,17 @@
       <img src="images/Bootstrap_logo.svg.png" alt="Bootstrap" class="tech-logo">
     </div>
 
+    <div class="col-4 col-md-2 text-center mb-3">
+      <img src="images/javascript-logo.svg" alt="JavaScript" class="tech-logo">
+    </div>
+    
+    <div class="col-4 col-md-2 text-center mb-3">
+      <img src="images/Python-logo-notext.svg.png" alt="Python" class="tech-logo">
+    </div>
+
+    <div class="col-4 col-md-2 text-center mb-3">
+      <img src="images/flask-logo.png" alt="Flask" class="tech-logo">
+    </div>
   </div>
 </div>
 

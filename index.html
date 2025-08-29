@@ -54,7 +54,8 @@
 
 <div class="fixed-buttons">
 <button id="shareBtn" class="button" title="Share">
-  <img src="images/share.svg" height="20" alt="Share"/>
+  <img src="images/share-dark-mode.png" class="share-icon light" height="30" alt="Share (light)"/>
+  <img src="images/share.svg" class="share-icon dark" height="20" alt="Share (dark)"/>
   <ul>
     <li>
       <a href="https://www.linkedin.com/in/cemile-eda-kaya-1505e/" target="_blank">
@@ -68,14 +69,13 @@
     </li>
     <li>
       <a href="mailto: edakaya.1505@gmail.com" target="_blank">
-        <img src="images/gmail-icon-seeklogo.svg" height="35" alt="Instagram"/>
+        <img src="images/gmail-icon-seeklogo.svg" height="35" alt="Mail"/>
       </a>
     </li>
   </ul>
 </button>
 <a href="#" class="top">&#8593;</a>
 </div>
-
 <div class="container py-4">
   <!-- Buttons -->
   <div class="mb-3 d-flex justify-content-between align-items-center">
@@ -91,7 +91,7 @@
         </svg>
       </button>
     </div>
-    <span class="text-muted" id="lastUpdated">Last updated: -</span>
+    <span class="text" id="lastUpdated">Last updated: -</span>
   </div>
 
   <!-- Devices Table -->
@@ -112,7 +112,7 @@
         <tr><td colspan="7" class="text-center text-muted">No data yet</td></tr>
       </tbody>
     </table>
-    <p class="text-end text-muted" id="deviceCount">Devices connected: -</p>
+    <p class="text-end" id="deviceCount">Devices connected: -</p>
 
     <!-- Summary Table -->
     <table class="table table-bordered table-hover table-rounded" style="border:1px solid #363636; border-radius:1rem; overflow:hidden;">

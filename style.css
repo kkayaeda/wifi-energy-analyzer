@@ -53,6 +53,25 @@ body.dark-mode p {
   color: #e4e2e2;
 }
 
+/* Last updated & Devices connected text */
+#lastUpdated {
+    color: #4a5157;
+}
+
+body.dark-mode #lastUpdated {
+    color: #f1f1f1;
+}
+
+#deviceCount {
+    color: #4a5157;
+}
+
+body.dark-mode #deviceCount {
+    color: #f1f1f1;
+}
+
+
+
 /* Navbar */
 .navbar {
   background-color: #c7dbcbd0 !important;
@@ -197,12 +216,15 @@ body.dark-mode #status {
   margin: 5px;
 }
 
+/* ======================
+   Refresh Buttons - Light Mode (default)
+   ====================== */
 .refresh-button {
   display: inline-block;
   border-radius: 10px;
   background-color: transparent;
-  border: 2px solid #ca1a1a;
-  color: #ca1a1a;
+  border: 2px solid #ff0000;
+  color: #ff0000;
   text-align: center;
   font-size: 16px;
   padding: 8px;
@@ -235,6 +257,26 @@ body.dark-mode #status {
 .refresh-history-button:hover {
   background-color: #ca1a1a;
   color: #FFFFFF;
+}
+
+body.dark-mode .refresh-button {
+  border: 2px solid #ff9999;
+  color: #ff9999;
+}
+
+body.dark-mode .refresh-button:hover {
+  background-color: #ff9999;
+  color: #000;
+}
+
+body.dark-mode .refresh-history-button {
+  border: 2px solid #ff9999;
+  color: #ff9999;
+}
+
+body.dark-mode .refresh-history-button:hover {
+  background-color: #ff9999;
+  color: #000;
 }
 
 /*Download Button*/
@@ -475,12 +517,19 @@ main, .content, .container.py-4 {
   width: 32px;
   height: 32px;
   vertical-align: middle;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, color 0.3s ease; /* color geçişi eklendi */
+  color: #212529; /* light mod rengi (siyah gibi) */
 }
 
 #darkModeToggle:active .toggle-icon {
   transform: scale(0.95);
 }
+
+/* Dark moddayken icon beyaz olsun */
+body.dark-mode #darkModeToggle .toggle-icon {
+  color: #fff;
+}
+
 
 /* Buttons */
 body.dark-mode .btn.btn-outline-danger {
@@ -556,6 +605,11 @@ body.dark-mode .contact-container select {
   color: #f1f1f1;
   border: 1px solid #555;
 }
+
+body.dark-mode h5.text-center.mb-4 {
+  color: #e4e2e2 !important;
+}
+
 
 /*Submit Button */
 .submit-button {
@@ -637,9 +691,9 @@ body.dark-mode .submit-button:hover {
   z-index: 1000;
 }
 
-/* Share butonu */
+/*Share Button*/
 .button {
-  background: rgb(167, 190, 169);
+  background: #000;
   border: none;
   border-radius: 50%;
   width: 45px;
@@ -650,11 +704,27 @@ body.dark-mode .submit-button:hover {
   justify-content: center;
 }
 
+/* Dark mode için arka plan */
+body.dark-mode .button {
+  background: #ccd3c9;
+  color: #ccd3c9;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* İkonlar */
 .button img {
   display: block;
   margin: auto;
 }
 
+/* Share butonu için özel: light/dark ikon */
+.share-icon.light { display: block; }
+.share-icon.dark { display: none; }
+
+body.dark-mode .share-icon.light { display: none; }
+body.dark-mode .share-icon.dark { display: block; }
+
+/* Menü listesi */
 .button ul {
   list-style: none;
   margin: 0;
@@ -681,7 +751,7 @@ body.dark-mode .submit-button:hover {
   transform: translate(-50%, -50%) rotate(-135deg) translate(90px) rotate(135deg);
 }
 .button.active ul li:nth-child(3) {
-  transform: translate(-50%, -50%) rotate(-90deg) translate(90px) rotate(90deg);
+  transform: translate(-50%, -50%) rotate(-90deg) translate(70px) rotate(90deg);
 }
 
 /* Yukarı çık butonu */
@@ -691,10 +761,33 @@ body.dark-mode .submit-button:hover {
   font-family: sans-serif;
   color: #fff;
   background: #000;
+  width: 45px;
+  height: 45px;
   border-radius: 50px;
   white-space: nowrap;
   font-size: 14px;
   align-self: center;
+  z-index: 2000;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body.dark-mode .top {
+    color: #000;
+    background: #ccd3c9;
+    transition: color 0.3s ease;
+}
+
+/* Link davranışını kapat */
+.top:focus,
+.top:active,
+.top:hover,
+.top:visited {
+  color: #fff;           /* aynı kalsın */
+  text-decoration: none; /* alt çizgi kalksın */
+  background: #000;      /* maviye dönmesin */
 }
 
 /* Smooth scroll */
