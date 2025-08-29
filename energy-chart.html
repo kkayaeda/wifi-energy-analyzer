@@ -122,57 +122,83 @@
   </div>
 </footer>
 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
   <!-- Bootstrap JS -->
   <script src="js/bootstrap.bundle.min.js"></script>
   <!-- App Scripts -->
   <script src="java.js"></script>
 
   <!-- Chart.js kodunu DOMContentLoaded ile sarmala -->
-  <script>
-  document.addEventListener('DOMContentLoaded', () => {
-      const ctx = document.getElementById('energyChart')?.getContext('2d');
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const ctx = document.getElementById('energyChart')?.getContext('2d');
 
-      const energyChart = ctx ? new Chart(ctx, {
-          type:'line',
-          data:{
-              labels:[],
-              datasets:[
-                  {label:'Total Energy (kWh)', data:[], borderColor:'rgba(75,192,192,1)', backgroundColor:'rgba(75,192,192,0.2)', tension:0.3, fill:true},
-                  {label:'Cost (₺)', data:[], borderColor:'rgba(255,99,132,1)', backgroundColor:'rgba(255,99,132,0.2)', tension:0.3, fill:true},
-                  {label:'CO2 Emissions (kg)', data:[], borderColor:'rgba(255,206,86,1)', backgroundColor:'rgba(255,206,86,0.2)', tension:0.3, fill:true}
-              ]
-          },
-          options:{
-              responsive:false,
-              maintainAspectRatio:false,
-              plugins:{legend:{position:'top', labels:{color:'#212529'}}, tooltip:{mode:'index', intersect:false}},
-              scales:{
-                  x:{title:{display:true, text:'Time (min)'}, ticks:{color:'#212529'}},
-                  y:{title:{display:true, text:'Value'}, beginAtZero:true, ticks:{color:'#212529'}}
-              }
-          }
-      }) : null;
+    // Chart oluşturulmadan önce önceki Chart varsa yok et
+    if(window.energyChart) {
+        window.energyChart.destroy();
+    }
 
-      async function updateEnergyChart(){
-          if(!energyChart) return;
-          try{
-              const res = await fetch(`${API_BASE}/energy_data`);
-              const data = await res.json();
+    const energyChart = ctx ? new Chart(ctx, {
+        type:'line',
+        data:{
+            labels:[],
+            datasets:[
+                {label:'Total Energy (kWh)', data:[], borderColor:'rgba(75,192,192,1)', backgroundColor:'rgba(75,192,192,0.2)', tension:0.3, fill:true},
+                {label:'Cost (₺)', data:[], borderColor:'rgba(255,99,132,1)', backgroundColor:'rgba(255,99,132,0.2)', tension:0.3, fill:true},
+                {label:'CO2 Emissions (kg)', data:[], borderColor:'rgba(255,206,86,1)', backgroundColor:'rgba(255,206,86,0.2)', tension:0.3, fill:true}
+            ]
+        },
+        options:{
+            responsive:false,
+            maintainAspectRatio:false,
+            plugins:{
+                legend:{
+                    position:'top',
+                    labels:{
+                        color: document.body.classList.contains('dark-mode') ? '#fff' : '#212529' // Dark mode uyumlu
+                    }
+                },
+                tooltip:{mode:'index', intersect:false}
+            },
+            scales:{
+                x:{
+                    title:{display:true, text:'Time (min)', color: document.body.classList.contains('dark-mode') ? '#fff' : '#212529'},
+                    ticks:{color: document.body.classList.contains('dark-mode') ? '#fff' : '#212529'}
+                },
+                y:{
+                    title:{display:true, text:'Value', color: document.body.classList.contains('dark-mode') ? '#fff' : '#212529'},
+                    beginAtZero:true,
+                    ticks:{color: document.body.classList.contains('dark-mode') ? '#fff' : '#212529'}
+                }
+            }
+        }
+    }) : null;
 
-              energyChart.data.labels = data.labels||[];
-              energyChart.data.datasets[0].data = data.energy||[];
-              energyChart.data.datasets[1].data = data.cost||[];
-              energyChart.data.datasets[2].data = data.co2||[];
-              energyChart.update();
-          } catch(err){
-              console.error('Chart update error:', err);
-          }
-      }
+    // global olarak erişilebilir yap
+    window.energyChart = energyChart;
 
-      // İlk yükleme
-      updateEnergyChart();
-  });
-  </script>
+    async function updateEnergyChart(){
+        if(!energyChart) return;
+        try{
+            const res = await fetch(`${API_BASE}/energy_data`);
+            const data = await res.json();
+
+            energyChart.data.labels = data.labels||[];
+            energyChart.data.datasets[0].data = data.energy||[];
+            energyChart.data.datasets[1].data = data.cost||[];
+            energyChart.data.datasets[2].data = data.co2||[];
+            energyChart.update();
+        } catch(err){
+            console.error('Chart update error:', err);
+        }
+    }
+
+    // İlk yükleme
+    updateEnergyChart();
+});
+</script>
+
 
 </body>
 </html>

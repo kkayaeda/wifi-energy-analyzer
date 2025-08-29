@@ -188,6 +188,8 @@
   </div>
 </footer>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <!-- Bootstrap JS -->
 <script src="js/bootstrap.bundle.min.js"></script>
 
@@ -476,8 +478,6 @@ async function updateEnergyTable(){
 window.addEventListener("load", () => {
   loadDevices();
   loadEnergy();
-  updateDevicesTable();
-  updateEnergyTable();
 });
 
 document.getElementById("updateBtn").addEventListener("click", () => {
